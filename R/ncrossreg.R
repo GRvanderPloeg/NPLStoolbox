@@ -115,7 +115,7 @@ ncrossreg = function(X, y,
       key = paste(comp, fold, sep = "_")
       if (!is.null(resultsByGroup[[key]])) {
         bestEntry = resultsByGroup[[key]][[1]]
-        print(bestEntry$Xtest[1,1,1])
+
         pred = npred(bestEntry$model, bestEntry$Xtest)
         pred_original = pred + bestEntry$Ymean
 
