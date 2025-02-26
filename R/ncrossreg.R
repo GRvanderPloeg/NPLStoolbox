@@ -68,17 +68,14 @@ ncrossreg = function(X, y,
     Xtrain_cnt_scl = Xtrain_cnt #rTensor::k_fold(unfoldedXtrain_cnt, m=2, modes=Xtrain@modes)
 
     # Use the means and stds to center and scale Xtest as well
-    if(length(dim(Xtest)) > 2){
-      unfoldedXtest = rTensor::k_unfold(Xtest, 1)@data
-      unfoldedXtest_cnt = sweep(unfoldedXtest, 2, means, FUN="-")
-      # unfoldedXtest_scl = sweep(unfoldedXtest_cnt, 1, stds, FUN="/")
-      Xtest_cnt_scl = rTensor::k_fold(unfoldedXtest_cnt, m=1, modes=Xtest@modes)
-    } else{
-      unfoldedXtest = c(Xtest@data)
-      unfoldedXtest_cnt = array(unfoldedXtest - means, dim(Xtest))
-      # unfoldedXtest_scl = sweep(unfoldedXtest_cnt, 1, stds, FUN="/")
-      Xtest_cnt_scl = rTensor::as.tensor(unfoldedXtest_cnt)
+    if(length(dim(Xtest)) == 2){ # Only one sample given
+      Xtest = rTensor::as.tensor(array(Xtest@data, dim=c(1,dim(Xtest))))
     }
+
+    unfoldedXtest = rTensor::k_unfold(Xtest, 1)@data
+    unfoldedXtest_cnt = sweep(unfoldedXtest, 2, means, FUN="-")
+    # unfoldedXtest_scl = sweep(unfoldedXtest_cnt, 1, stds, FUN="/")
+    Xtest_cnt_scl = rTensor::k_fold(unfoldedXtest_cnt, m=1, modes=Xtest@modes)
 
     Xtrain = Xtrain_cnt_scl@data
     Xtest = Xtest_cnt_scl@data
@@ -118,6 +115,7 @@ ncrossreg = function(X, y,
       key = paste(comp, fold, sep = "_")
       if (!is.null(resultsByGroup[[key]])) {
         bestEntry = resultsByGroup[[key]][[1]]
+        print(bestEntry$Xtest[1,1,1])
         pred = npred(bestEntry$model, bestEntry$Xtest)
         pred_original = pred + bestEntry$Ymean
 
@@ -127,7 +125,6 @@ ncrossreg = function(X, y,
     predictionsByComp[[comp]] = Ypred_comp
     RMSE_list[comp] = sqrt(mean((y - Ypred_comp)^2))
   }
-
   RMSEdata = dplyr::tibble(numComponents = 1:maxNumComponents,
                            RMSE = RMSE_list)
 
