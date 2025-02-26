@@ -185,6 +185,11 @@ for(k in 1:K){
   X[,,k] = cbind(df_log, sampleInfo) %>% as_tibble() %>% mutate(subject=as.character(subject)) %>% filter(Days == Day) %>% select(c(colnames(df_log),subject)) %>% right_join(subjectMeta) %>% arrange(subject) %>% select(-colnames(subjectMeta)) %>% as.matrix()
 }
 
+# Remove problematic sample
+mask = !is.na(subjectMeta$BMI)
+X = X[mask,,]
+subjectMeta = subjectMeta[mask,]
+
 # Mask based on shared subjects for BMI and WHZ
 # X_bmi = X[subjectMeta$subject %in% homogenized_subjectMeta_bmi$subject,,]
 # X_whz = X[subjectMeta$subject %in% homogenized_subjectMeta_whz$subject,,]
