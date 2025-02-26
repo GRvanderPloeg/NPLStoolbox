@@ -13,8 +13,8 @@ coverage](https://codecov.io/gh/GRvanderPloeg/NPLStoolbox/graph/badge.svg)](http
 The `NPLStoolbox` allows researchers to use the N-way Partial Least
 Squares method for their multi-way data.
 
-Currently it contains a work in process `triPLS1()` function and an
-example dataset `Cornejo2025`.
+Currently it contains a work in process `triPLS1()` function and the
+example datasets `Cornejo2025` and `Jakobsen2025`.
 
 More will follow!
 

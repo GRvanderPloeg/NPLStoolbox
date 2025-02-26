@@ -4,16 +4,16 @@ library(tidyverse)
 library(parafac4microbiome)
 
 # Tongue
-tongue = read.csv("./data-raw/20240503_UNOISE_new/tongueCounts.csv", header=FALSE) %>% as_tibble()
-tongue_taxonomy = read.csv("./data-raw/20240503_UNOISE_new/taxonomyTongue_fixed.csv", sep=" ") %>% as_tibble()
-tongue_sampleMeta = read.csv("./data-raw/20240503_UNOISE_new/tongueSampleMeta.csv",header=FALSE) %>% as_tibble()
+tongue = read.csv("./data-raw/Cornejo2025/20240503_UNOISE_new/tongueCounts.csv", header=FALSE) %>% as_tibble()
+tongue_taxonomy = read.csv("./data-raw/Cornejo2025/20240503_UNOISE_new/taxonomyTongue_fixed.csv", sep=" ") %>% as_tibble()
+tongue_sampleMeta = read.csv("./data-raw/Cornejo2025/20240503_UNOISE_new/tongueSampleMeta.csv",header=FALSE) %>% as_tibble()
 
 colnames(tongue) = tongue_taxonomy$zOTU
-temp = read.csv("./data-raw/sampleInfo_fixed.csv", sep=" ") %>% as_tibble()
+temp = read.csv("./data-raw/Cornejo2025/sampleInfo_fixed.csv", sep=" ") %>% as_tibble()
 colnames(tongue_sampleMeta) = c(temp %>% select(-Description,-subject,-newTimepoint) %>% colnames, "Description", "subject", "newTimepoint")
 
 # Load other metadata and ph
-ph_BOMP = read_delim("./data-raw/GOH-TRANS_csv_export_20240205114955/GOH-TRANS_export_20240205.csv",
+ph_BOMP = read_delim("./data-raw/Cornejo2025/GOH-TRANS_csv_export_20240205114955/GOH-TRANS_export_20240205.csv",
                      delim = ";", escape_double = FALSE, trim_ws = TRUE) %>% as_tibble()
 
 df1 = ph_BOMP %>% select(`Participant Id`, starts_with("5.")) %>% mutate(subject = 1:42, numTeeth = `5.1|Number of teeth`, DMFT = `5.2|DMFT`, numBleedingSites = `5.3|Bleeding sites`, boppercent = `5.4|BOP%`, DPSI = `5.5|DPSI`, pH = `5.8|pH`) %>% select(subject, numTeeth, DMFT, numBleedingSites, boppercent, DPSI, pH)
@@ -50,12 +50,12 @@ tongueCube_mode3 = tongue_sampleMeta %>% filter(newTimepoint %in% timepoints) %>
 tongueData = list("data"=tongueCube, "mode1"=tongueCube_mode1, "mode2"=tongueCube_mode2, "mode3"=tongueCube_mode3)
 
 # Saliva
-saliva = read.csv("./data-raw/20240503_UNOISE_new/salivaCounts.csv", header=FALSE) %>% as_tibble()
-saliva_taxonomy = read.csv("./data-raw/20240503_UNOISE_new/taxonomysaliva_fixed.csv", sep=" ") %>% as_tibble()
-saliva_sampleMeta = read.csv("./data-raw/20240503_UNOISE_new/salivaSampleMeta.csv",header=FALSE) %>% as_tibble()
+saliva = read.csv("./data-raw/Cornejo2025/20240503_UNOISE_new/salivaCounts.csv", header=FALSE) %>% as_tibble()
+saliva_taxonomy = read.csv("./data-raw/Cornejo2025/20240503_UNOISE_new/taxonomysaliva_fixed.csv", sep=" ") %>% as_tibble()
+saliva_sampleMeta = read.csv("./data-raw/Cornejo2025/20240503_UNOISE_new/salivaSampleMeta.csv",header=FALSE) %>% as_tibble()
 
 colnames(saliva) = saliva_taxonomy$zOTU
-temp = read.csv("./data-raw/sampleInfo_fixed.csv", sep=" ") %>% as_tibble()
+temp = read.csv("./data-raw/Cornejo2025/sampleInfo_fixed.csv", sep=" ") %>% as_tibble()
 colnames(saliva_sampleMeta) = c(temp %>% select(-Description,-subject,-newTimepoint) %>% colnames, "Description", "subject", "newTimepoint")
 
 # Put into cube
@@ -86,9 +86,9 @@ processedTongue = processDataCube(tongueData, sparsityThreshold = 0.5, considerG
 processedSaliva = processDataCube(salivaData, sparsityThreshold = 0.5, considerGroups=TRUE, groupVariable="GenderID", CLR=TRUE, centerMode=1, scaleMode=2)
 
 # Cytokines
-df = read.csv("./data-raw/20241209_cytokines.csv", header=FALSE, sep=" ") %>% as_tibble()
-featureMeta = read.csv("./data-raw/20241209_cytokines_featureMeta.csv", header=FALSE) %>% as_tibble()
-sampleInfo = read.csv("./data-raw/20241209_cytokines_sampleMeta.csv", header=FALSE, sep=" ") %>% as_tibble()
+df = read.csv("./data-raw/Cornejo2025/20241209_cytokines.csv", header=FALSE, sep=" ") %>% as_tibble()
+featureMeta = read.csv("./data-raw/Cornejo2025/20241209_cytokines_featureMeta.csv", header=FALSE) %>% as_tibble()
+sampleInfo = read.csv("./data-raw/Cornejo2025/20241209_cytokines_sampleMeta.csv", header=FALSE, sep=" ") %>% as_tibble()
 colnames(sampleInfo) = c("subject", "GenderID", "newTimepoint", "unknown", "unknown2")
 
 temp = sampleInfo %>% select(subject, GenderID) %>% unique()
