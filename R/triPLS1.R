@@ -119,5 +119,13 @@ triPLS1 = function(X, y, numComponents, tol=1e-10, maxIter=100) {
   mask = !is.na(y)
   model$varExpY = sum(Yhat[mask]^2) / sum(y[mask]^2) * 100
 
+  model$input = X
+  model$Xhat = array(Xhat, dim=dim(X))
+
+  Yfactors = list()
+  Yfactors[[1]] = U
+  Yfactors[[2]] = rep(1, numComponents)
+  model$Yfactors = Yfactors
+
   return(model)
 }

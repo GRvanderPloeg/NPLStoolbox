@@ -36,12 +36,19 @@ calculateZ = function(X, u, DimX) {
 
 calculateScores = function(X, Wj, Wk){
 
-  missing = any(is.na(X))
-  I = nrow(X)
+  # if(length(dim(X)) > 2){
+  #   X = rTensor::k_unfold(rTensor::as.tensor(X), 1)@data
+  #   I = nrow(X)
+  # } else{
+  #   X = array(X, dim=c(1,dim(X)))
+  #   X = rTensor::k_unfold(rTensor::as.tensor(X), 1)@data
+  #   I = 1
+  # }
+  I = dim(X)[1]
   Wkron = kronecker(Wk, Wj)
   t = rep(NA, I)
 
-  if(missing){
+  if(any(is.na(X))){
     for(i in 1:I){
       mask = !is.na(X[i,])
       t[i] = X[i,mask] %*% Wkron[mask] / (t(Wkron[mask]) %*% Wkron[mask])
@@ -103,5 +110,31 @@ misssum = function(X) {
   }
 
   return(mm)
+}
+
+safePseudoInverse = function(M, mu=1e-6){
+  attempt = try(pracma::pinv(M), silent=TRUE)
+  if(inherits(attempt, "try-error")){
+    regM = M + mu * diag(1, nrow(M), ncol(M))  # Ensure correct dimensions
+    inv = pracma::pinv(regM)
+  } else{
+    inv = attempt
+  }
+
+  return(inv)
+}
+
+
+safeSolve = function(M, mu=1e-6){
+
+  attempt = try(solve(M), silent=TRUE)
+  if(inherits(attempt, "try-error")){
+    regM = M + mu * diag(ncol(M))
+    inv = solve(regM)
+  } else{
+    inv = attempt
+  }
+
+  return(inv)
 }
 
