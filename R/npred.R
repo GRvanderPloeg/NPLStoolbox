@@ -26,6 +26,7 @@ npred = function(model, newX){
   numSamples = dim(newX)[1]
   unfoldedX = rTensor::k_unfold(rTensor::as.tensor(newX), 1)@data
 
+  # TODO: delete W as it doesn't do anything
   W = matrix(0L, nrow=J*K, ncol=numComponents)
   for(f in 1:numComponents){
     W[,f] = pracma::kron(Fac[[3]][,f], Fac[[2]][,f])
