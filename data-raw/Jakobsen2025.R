@@ -46,57 +46,69 @@ featureMask = colSums(df) > 0
 df = df[,featureMask]
 taxonomy = taxonomy[featureMask,]
 
+# New approach per 20250402:
+faeces = parafac4microbiome::reshapeData(df, sampleInfo$subject, taxonomy, sampleInfo$Days)
+
+# Repair modes
+colnames(faeces$mode1) = c("subject", "index")
+faeces$mode1 = faeces$mode1 %>% left_join(subjectMeta) %>% select(-index)
+faeces$mode2 = faeces$mode2 %>% select(-index)
+faeces$mode3 = faeces$mode3 %>% mutate(visit=1:3, timepoint=timepointMetadata) %>% select(-timepointMetadata,-index)
+
+# Old approach:
+#
 # Filter based on sparsity
-threshold = 0.75
-sparsity = colSums(df==0) / nrow(df)
-featureSelection = sparsity <= threshold
+# threshold = 0.75
+# sparsity = colSums(df==0) / nrow(df)
+# featureSelection = sparsity <= threshold
 
-# CLR
-df_clr = t(apply(df+1, 1, function(x){log(x / compositions::geometricmean(x))})) %>% as_tibble()
-
-# Apply feature filter
-df_clr = df_clr[,featureSelection]
-taxonomy_filtered = taxonomy[featureSelection,]
+# # CLR
+# df_clr = t(apply(df+1, 1, function(x){log(x / compositions::geometricmean(x))})) %>% as_tibble()
+#
+# # Apply feature filter
+# df_clr = df_clr[,featureSelection]
+# taxonomy_filtered = taxonomy[featureSelection,]
 
 # Make into cube
-I = length(unique(sampleInfo$subject))
-J = ncol(df_clr)
-K = length(unique(sampleInfo$Days))
-X = array(0L, c(I,J,K))
-timepoints = sampleInfo %>% arrange(Days) %>% select(Days) %>% unique() %>% pull()
-
-for(k in 1:K){
-  Day = timepoints[k]
-  X[,,k] = cbind(df_clr, sampleInfo) %>%
-    as_tibble() %>%
-    mutate(subject=as.character(subject)) %>%
-    filter(Days == Day) %>%
-    select(c(colnames(df_clr),subject)) %>%
-    right_join(subjectMeta) %>%
-    arrange(subject) %>%
-    select(-colnames(subjectMeta)) %>%
-    as.matrix()
-}
-
+# I = length(unique(sampleInfo$subject))
+# J = ncol(df)
+# K = length(unique(sampleInfo$Days))
+# X = array(0L, c(I,J,K))
+# timepoints = sampleInfo %>% arrange(Days) %>% select(Days) %>% unique() %>% pull()
+#
+# for(k in 1:K){
+#   Day = timepoints[k]
+#   X[,,k] = cbind(df, sampleInfo) %>%
+#     as_tibble() %>%
+#     mutate(subject=as.character(subject)) %>%
+#     filter(Days == Day) %>%
+#     select(c(colnames(df),subject)) %>%
+#     right_join(subjectMeta) %>%
+#     arrange(subject) %>%
+#     select(-colnames(subjectMeta)) %>%
+#     as.matrix()
+# }
+#
+#
 # Mask based on shared subjects for BMI and WHZ
 # X_bmi = X[subjectMeta$subject %in% homogenized_subjectMeta_bmi$subject,,]
 # X_whz = X[subjectMeta$subject %in% homogenized_subjectMeta_whz$subject,,]
-X_bmi = X
-X_whz = X
-
-# Center and scale
-X_bmi_cnt = parafac4microbiome::multiwayCenter(X_bmi, mode=1)
-X_bmi_cnt_scl = parafac4microbiome::multiwayScale(X_bmi_cnt, mode=2)
-
-X_whz_cnt = parafac4microbiome::multiwayCenter(X_whz, mode=1)
-X_whz_cnt_scl = parafac4microbiome::multiwayScale(X_whz_cnt, mode=2)
-
-# Save
-faeces_df_bmi = X_bmi_cnt_scl
-faeces_df_whz = X_whz_cnt_scl
-faeces_subjectMeta = subjectMeta
-faeces_taxonomy = taxonomy_filtered
-faeces_timepoints = matrix(NA, nrow=3, ncol=2) %>% as_tibble() %>% mutate(visit = 1:3, timepoint=timepoints) %>% select(-V1,-V2)
+# X_bmi = X
+# X_whz = X
+#
+# # Center and scale
+# X_bmi_cnt = parafac4microbiome::multiwayCenter(X_bmi, mode=1)
+# X_bmi_cnt_scl = parafac4microbiome::multiwayScale(X_bmi_cnt, mode=2)
+#
+# X_whz_cnt = parafac4microbiome::multiwayCenter(X_whz, mode=1)
+# X_whz_cnt_scl = parafac4microbiome::multiwayScale(X_whz_cnt, mode=2)
+#
+# # Save
+# faeces_df_bmi = X_bmi_cnt_scl
+# faeces_df_whz = X_whz_cnt_scl
+# faeces_subjectMeta = subjectMeta
+# faeces_taxonomy = taxonomy_filtered
+# faeces_timepoints = matrix(NA, nrow=3, ncol=2) %>% as_tibble() %>% mutate(visit = 1:3, timepoint=timepoints) %>% select(-V1,-V2)
 
 # Milk microbiome
 df = read.csv("./data-raw/Jakobsen2025/milkCounts.csv", header=FALSE, sep=" ") %>% as_tibble()
@@ -112,48 +124,59 @@ featureMask = colSums(df) > 0
 df = df[,featureMask]
 taxonomy = taxonomy[featureMask,]
 
-# Filter based on sparsity
-threshold = 0.85
-sparsity = colSums(df==0) / nrow(df)
-featureSelection = sparsity <= threshold
+# New approach per 20250402
+milk = parafac4microbiome::reshapeData(df, sampleInfo$subject, taxonomy, sampleInfo$Days)
 
-# CLR
-df_clr = t(apply(df+1, 1, function(x){log(x / compositions::geometricmean(x))})) %>% as_tibble()
+# Repair modes
+colnames(milk$mode1) = c("subject", "index")
+milk$mode1 = milk$mode1 %>% left_join(subjectMeta) %>% select(-index)
+milk$mode2 = milk$mode2 %>% select(-index)
+milk$mode3 = milk$mode3 %>% mutate(visit=1:4, timepoint=timepointMetadata) %>% select(-timepointMetadata,-index)
 
-# Apply feature filter
-df_clr = df_clr[,featureSelection]
-taxonomy_filtered = taxonomy[featureSelection,]
-
-# Make into cube
-I = length(unique(sampleInfo$subject))
-J = ncol(df_clr)
-K = length(unique(sampleInfo$Days))
-X = array(0L, c(I,J,K))
-timepoints = sampleInfo %>% arrange(Days) %>% select(Days) %>% unique() %>% pull()
-
-for(k in 1:K){
-  Day = timepoints[k]
-  X[,,k] = cbind(df_clr, sampleInfo) %>% as_tibble() %>% mutate(subject=as.character(subject)) %>% filter(Days == Day) %>% select(c(colnames(df_clr),subject)) %>% right_join(subjectMeta) %>% arrange(subject) %>% select(-colnames(subjectMeta)) %>% as.matrix()
-}
+# Old approach:
+#
+# # Filter based on sparsity
+# threshold = 0.85
+# sparsity = colSums(df==0) / nrow(df)
+# featureSelection = sparsity <= threshold
+#
+# # CLR
+# df_clr = t(apply(df+1, 1, function(x){log(x / compositions::geometricmean(x))})) %>% as_tibble()
+#
+# # Apply feature filter
+# df_clr = df_clr[,featureSelection]
+# taxonomy_filtered = taxonomy[featureSelection,]
+#
+# # Make into cube
+# I = length(unique(sampleInfo$subject))
+# J = ncol(df_clr)
+# K = length(unique(sampleInfo$Days))
+# X = array(0L, c(I,J,K))
+# timepoints = sampleInfo %>% arrange(Days) %>% select(Days) %>% unique() %>% pull()
+#
+# for(k in 1:K){
+#   Day = timepoints[k]
+#   X[,,k] = cbind(df_clr, sampleInfo) %>% as_tibble() %>% mutate(subject=as.character(subject)) %>% filter(Days == Day) %>% select(c(colnames(df_clr),subject)) %>% right_join(subjectMeta) %>% arrange(subject) %>% select(-colnames(subjectMeta)) %>% as.matrix()
+# }
 
 # Mask based on shared subjects for BMI and WHZ
 # X_bmi = X[subjectMeta$subject %in% homogenized_subjectMeta_bmi$subject,,]
 # X_whz = X[subjectMeta$subject %in% homogenized_subjectMeta_whz$subject,,]
-X_bmi = X
-X_whz = X
-
-# Center and scale
-X_bmi_cnt = parafac4microbiome::multiwayCenter(X_bmi, mode=1)
-X_bmi_cnt_scl = parafac4microbiome::multiwayScale(X_bmi_cnt, mode=2)
-
-X_whz_cnt = parafac4microbiome::multiwayCenter(X_whz, mode=1)
-X_whz_cnt_scl = parafac4microbiome::multiwayScale(X_whz_cnt, mode=2)
-
-milk_df_bmi = X_bmi_cnt_scl
-milk_df_whz = X_whz_cnt_scl
-milk_subjectMeta = subjectMeta
-milk_taxonomy = taxonomy_filtered
-milk_timepoints = matrix(NA, nrow=4, ncol=2) %>% as_tibble() %>% mutate(visit = 1:4, timepoint=timepoints) %>% select(-V1,-V2)
+# X_bmi = X
+# X_whz = X
+#
+# # Center and scale
+# X_bmi_cnt = parafac4microbiome::multiwayCenter(X_bmi, mode=1)
+# X_bmi_cnt_scl = parafac4microbiome::multiwayScale(X_bmi_cnt, mode=2)
+#
+# X_whz_cnt = parafac4microbiome::multiwayCenter(X_whz, mode=1)
+# X_whz_cnt_scl = parafac4microbiome::multiwayScale(X_whz_cnt, mode=2)
+#
+# milk_df_bmi = X_bmi_cnt_scl
+# milk_df_whz = X_whz_cnt_scl
+# milk_subjectMeta = subjectMeta
+# milk_taxonomy = taxonomy_filtered
+# milk_timepoints = matrix(NA, nrow=4, ncol=2) %>% as_tibble() %>% mutate(visit = 1:4, timepoint=timepoints) %>% select(-V1,-V2)
 
 # Milk metabolomics
 df = read.csv("./data-raw/Jakobsen2025/milkMetabNumeric.csv", header=FALSE, sep=" ") %>% as_tibble()
@@ -173,17 +196,22 @@ subjectMeta = subjectMeta %>% mutate(index=1:nrow(.)) %>% filter(!index %in% dro
 # Log transform
 df_log = log(df)
 
-# Make into cube
-I = length(unique(sampleInfo$subject))
-J = ncol(df_log)
-K = length(unique(sampleInfo$Days))
-X = array(0L, c(I,J,K))
-timepoints = sampleInfo %>% arrange(Days) %>% select(Days) %>% unique() %>% pull()
+# Make into cube - new approach per 20250402
+temp = parafac4microbiome::reshapeData(df_log, sampleInfo$subject, taxonomy, sampleInfo$Days)
+X = temp$data
 
-for(k in 1:K){
-  Day = timepoints[k]
-  X[,,k] = cbind(df_log, sampleInfo) %>% as_tibble() %>% mutate(subject=as.character(subject)) %>% filter(Days == Day) %>% select(c(colnames(df_log),subject)) %>% right_join(subjectMeta) %>% arrange(subject) %>% select(-colnames(subjectMeta)) %>% as.matrix()
-}
+# Old approach:
+#
+# I = length(unique(sampleInfo$subject))
+# J = ncol(df_log)
+# K = length(unique(sampleInfo$Days))
+# X = array(0L, c(I,J,K))
+# timepoints = sampleInfo %>% arrange(Days) %>% select(Days) %>% unique() %>% pull()
+#
+# for(k in 1:K){
+#   Day = timepoints[k]
+#   X[,,k] = cbind(df_log, sampleInfo) %>% as_tibble() %>% mutate(subject=as.character(subject)) %>% filter(Days == Day) %>% select(c(colnames(df_log),subject)) %>% right_join(subjectMeta) %>% arrange(subject) %>% select(-colnames(subjectMeta)) %>% as.matrix()
+# }
 
 # Remove problematic sample
 mask = !is.na(subjectMeta$BMI)
@@ -207,7 +235,7 @@ milkMetab_df_bmi = X_bmi_cnt_scl
 milkMetab_df_whz = X_whz_cnt_scl
 milkMetab_subjectMeta = subjectMeta
 milkMetab_taxonomy = taxonomy
-milkMetab_timepoints = matrix(NA, nrow=4, ncol=2) %>% as_tibble() %>% mutate(visit = 1:4, timepoint=timepoints) %>% select(-V1,-V2)
+milkMetab_timepoints = matrix(NA, nrow=4, ncol=2) %>% as_tibble() %>% mutate(visit = 1:4, timepoint=sampleInfo %>% arrange(Days) %>% select(Days) %>% unique() %>% pull()) %>% select(-V1,-V2)
 
 # Fix milkMetab feature annotations
 df = milkMetab_taxonomy %>% mutate(Metabolite = make.names(X), CAS.Registry = make.names(CAS.Registry)) %>% left_join(metaboliteCategories)
@@ -226,8 +254,6 @@ df[70,"Metabolite"] = "tau.Methylhistidine" # Fix non-ascii tau character
 milkMetab_featureMeta = df %>% select(-X)
 
 # Save
-faeces = list("data"=faeces_df_bmi, "mode1"=faeces_subjectMeta, "mode2"=faeces_taxonomy, "mode3"=faeces_timepoints)
-milk = list("data"=milk_df_bmi, "mode1"=milk_subjectMeta, "mode2"=milk_taxonomy, "mode3"=milk_timepoints)
 milkMetab = list("data"=milkMetab_df_bmi, "mode1"=milkMetab_subjectMeta, "mode2"=milkMetab_featureMeta, "mode3"=milkMetab_timepoints)
 
 Jakobsen2025 = list()
