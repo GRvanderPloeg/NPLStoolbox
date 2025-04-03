@@ -51,7 +51,7 @@ faeces = parafac4microbiome::reshapeData(df, sampleInfo$subject, taxonomy, sampl
 
 # Repair modes
 colnames(faeces$mode1) = c("subject", "index")
-faeces$mode1 = faeces$mode1 %>% left_join(subjectMeta) %>% select(-index)
+faeces$mode1 = faeces$mode1 %>% left_join(subjectMeta) %>% select(-index) %>% left_join(subjectMeta_faeces)
 faeces$mode2 = faeces$mode2 %>% select(-index)
 faeces$mode3 = faeces$mode3 %>% mutate(visit=1:3, timepoint=timepointMetadata) %>% select(-timepointMetadata,-index)
 
@@ -129,7 +129,7 @@ milk = parafac4microbiome::reshapeData(df, sampleInfo$subject, taxonomy, sampleI
 
 # Repair modes
 colnames(milk$mode1) = c("subject", "index")
-milk$mode1 = milk$mode1 %>% left_join(subjectMeta) %>% select(-index)
+milk$mode1 = milk$mode1 %>% left_join(subjectMeta) %>% select(-index) %>% left_join(subjectMeta_milk)
 milk$mode2 = milk$mode2 %>% select(-index)
 milk$mode3 = milk$mode3 %>% mutate(visit=1:4, timepoint=timepointMetadata) %>% select(-timepointMetadata,-index)
 
@@ -197,8 +197,29 @@ subjectMeta = subjectMeta %>% mutate(index=1:nrow(.)) %>% filter(!index %in% dro
 df_log = log(df)
 
 # Make into cube - new approach per 20250402
-temp = parafac4microbiome::reshapeData(df_log, sampleInfo$subject, taxonomy, sampleInfo$Days)
-X = temp$data
+milkMetab = parafac4microbiome::reshapeData(df_log, sampleInfo$subject, taxonomy, sampleInfo$Days)
+
+# Edit metadata per mode to avoid breaking changes
+colnames(milkMetab$mode1) = c("subject", "index")
+milkMetab$mode1 = milkMetab$mode1 %>% left_join(subjectMeta) %>% select(-index) %>% left_join(subjectMeta_milkMetab)
+
+milkMetab$mode3 = milkMetab$mode3 %>% mutate(visit = index, timepoint = timepointMetadata) %>% select(-timepointMetadata,-index)
+
+# Fix milkMetab feature annotations
+df = milkMetab$mode2 %>% mutate(Metabolite = make.names(X), CAS.Registry = make.names(CAS.Registry)) %>% left_join(metaboliteCategories)
+
+# Fix mismatches by hand
+df[df$Metabolite == "X2.Aminobutyrate","Class"] = "Amino acids and derivatives"
+df[df$Metabolite == "X2.Fucosyllactose","Class"] = "Oligosaccharides"
+df[df$Metabolite == "X2.Hydroxybutyrate","Class"] = "Amino acids and derivatives"
+df[df$Metabolite == "X2.Oxoglutarate","Class"] = "Energy related"
+df[df$Metabolite == "X3.Fucosyllactose","Class"] = "Oligosaccharides"
+df[df$Metabolite == "X3SL.partial","Class"] = "Oligosaccharides"
+df[df$Metabolite == "X6SL.partial","Class"] = "Oligosaccharides"
+df[df$Metabolite == "Methionine","Class"] = "Amino acids and derivatives"
+df[70,"Metabolite"] = "tau.Methylhistidine" # Fix non-ascii tau character
+
+milkMetab$mode2 = df %>% select(-X,-index)
 
 # Old approach:
 #
@@ -212,49 +233,49 @@ X = temp$data
 #   Day = timepoints[k]
 #   X[,,k] = cbind(df_log, sampleInfo) %>% as_tibble() %>% mutate(subject=as.character(subject)) %>% filter(Days == Day) %>% select(c(colnames(df_log),subject)) %>% right_join(subjectMeta) %>% arrange(subject) %>% select(-colnames(subjectMeta)) %>% as.matrix()
 # }
-
+#
 # Remove problematic sample
-mask = !is.na(subjectMeta$BMI)
-X = X[mask,,]
-subjectMeta = subjectMeta[mask,]
-
-# Mask based on shared subjects for BMI and WHZ
-# X_bmi = X[subjectMeta$subject %in% homogenized_subjectMeta_bmi$subject,,]
-# X_whz = X[subjectMeta$subject %in% homogenized_subjectMeta_whz$subject,,]
-X_bmi = X
-X_whz = X
-
-# Center and scale
-X_bmi_cnt = parafac4microbiome::multiwayCenter(X_bmi, mode=1)
-X_bmi_cnt_scl = parafac4microbiome::multiwayScale(X_bmi_cnt, mode=2)
-
-X_whz_cnt = parafac4microbiome::multiwayCenter(X_whz, mode=1)
-X_whz_cnt_scl = parafac4microbiome::multiwayScale(X_whz_cnt, mode=2)
-
-milkMetab_df_bmi = X_bmi_cnt_scl
-milkMetab_df_whz = X_whz_cnt_scl
-milkMetab_subjectMeta = subjectMeta
-milkMetab_taxonomy = taxonomy
-milkMetab_timepoints = matrix(NA, nrow=4, ncol=2) %>% as_tibble() %>% mutate(visit = 1:4, timepoint=sampleInfo %>% arrange(Days) %>% select(Days) %>% unique() %>% pull()) %>% select(-V1,-V2)
-
-# Fix milkMetab feature annotations
-df = milkMetab_taxonomy %>% mutate(Metabolite = make.names(X), CAS.Registry = make.names(CAS.Registry)) %>% left_join(metaboliteCategories)
-
-# Fix mismatches by hand
-df[df$Metabolite == "X2.Aminobutyrate","Class"] = "Amino acids and derivatives"
-df[df$Metabolite == "X2.Fucosyllactose","Class"] = "Oligosaccharides"
-df[df$Metabolite == "X2.Hydroxybutyrate","Class"] = "Amino acids and derivatives"
-df[df$Metabolite == "X2.Oxoglutarate","Class"] = "Energy related"
-df[df$Metabolite == "X3.Fucosyllactose","Class"] = "Oligosaccharides"
-df[df$Metabolite == "X3SL.partial","Class"] = "Oligosaccharides"
-df[df$Metabolite == "X6SL.partial","Class"] = "Oligosaccharides"
-df[df$Metabolite == "Methionine","Class"] = "Amino acids and derivatives"
-df[70,"Metabolite"] = "tau.Methylhistidine" # Fix non-ascii tau character
-
-milkMetab_featureMeta = df %>% select(-X)
-
-# Save
-milkMetab = list("data"=milkMetab_df_bmi, "mode1"=milkMetab_subjectMeta, "mode2"=milkMetab_featureMeta, "mode3"=milkMetab_timepoints)
+# mask = !is.na(subjectMeta$BMI)
+# X = X[mask,,]
+# subjectMeta = subjectMeta[mask,]
+# #
+# # Mask based on shared subjects for BMI and WHZ
+# # X_bmi = X[subjectMeta$subject %in% homogenized_subjectMeta_bmi$subject,,]
+# # X_whz = X[subjectMeta$subject %in% homogenized_subjectMeta_whz$subject,,]
+# X_bmi = X
+# X_whz = X
+#
+# # Center and scale
+# X_bmi_cnt = parafac4microbiome::multiwayCenter(X_bmi, mode=1)
+# X_bmi_cnt_scl = parafac4microbiome::multiwayScale(X_bmi_cnt, mode=2)
+#
+# X_whz_cnt = parafac4microbiome::multiwayCenter(X_whz, mode=1)
+# X_whz_cnt_scl = parafac4microbiome::multiwayScale(X_whz_cnt, mode=2)
+#
+# milkMetab_df_bmi = X_bmi_cnt_scl
+# milkMetab_df_whz = X_whz_cnt_scl
+# milkMetab_subjectMeta = subjectMeta %>% left_join(subjectMeta_milkMetab)
+# milkMetab_taxonomy = taxonomy
+# milkMetab_timepoints = matrix(NA, nrow=4, ncol=2) %>% as_tibble() %>% mutate(visit = 1:4, timepoint=sampleInfo %>% arrange(Days) %>% select(Days) %>% unique() %>% pull()) %>% select(-V1,-V2)
+#
+# # Fix milkMetab feature annotations
+# df = milkMetab_taxonomy %>% mutate(Metabolite = make.names(X), CAS.Registry = make.names(CAS.Registry)) %>% left_join(metaboliteCategories)
+#
+# # Fix mismatches by hand
+# df[df$Metabolite == "X2.Aminobutyrate","Class"] = "Amino acids and derivatives"
+# df[df$Metabolite == "X2.Fucosyllactose","Class"] = "Oligosaccharides"
+# df[df$Metabolite == "X2.Hydroxybutyrate","Class"] = "Amino acids and derivatives"
+# df[df$Metabolite == "X2.Oxoglutarate","Class"] = "Energy related"
+# df[df$Metabolite == "X3.Fucosyllactose","Class"] = "Oligosaccharides"
+# df[df$Metabolite == "X3SL.partial","Class"] = "Oligosaccharides"
+# df[df$Metabolite == "X6SL.partial","Class"] = "Oligosaccharides"
+# df[df$Metabolite == "Methionine","Class"] = "Amino acids and derivatives"
+# df[70,"Metabolite"] = "tau.Methylhistidine" # Fix non-ascii tau character
+#
+# milkMetab_featureMeta = df %>% select(-X)
+#
+# # Save
+# milkMetab = list("data"=milkMetab_df_bmi, "mode1"=milkMetab_subjectMeta, "mode2"=milkMetab_featureMeta, "mode3"=milkMetab_timepoints)
 
 Jakobsen2025 = list()
 Jakobsen2025$faeces = faeces

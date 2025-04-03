@@ -1,0 +1,47 @@
+---
+title: "Cornejo2025_analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Cornejo2025_analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(NPLStoolbox)
+```
+
+```{r process the data}
+processedTongue = parafac4microbiome::processDataCube(Cornejo2025$Tongue, sparsityThreshold=0.5, considerGroups=TRUE, groupVariable="GenderID", centerMode=1, scaleMode=2)
+
+processedSaliva = parafac4microbiome::processDataCube(Cornejo2025$Saliva, sparsityThreshold=0.5, considerGroups=TRUE, groupVariable="GenderID", centerMode=1, scaleMode=2)
+
+processedCytokine = Cornejo2025$Cytokines
+```
+
+```{r make CP models}
+modelTongue = parafac4microbiome::parafac(processedTongue$data, nfac=2, nstart=100)
+modelSaliva = parafac4microbiome::parafac(processedSaliva$data, nfac=2, nstart=100)
+modelCytokine = parafac4microbiome::parafac(processedCytokine$data, nfac=2, nstart=100)
+```
+
+```{r make NPLS models}
+Y = as.numeric(as.factor(Cornejo2025$Tongue$mode1$GenderID))
+Ycnt = Y - mean(Y)
+tongue_NPLS = triPLS1(processedTongue$data, Ycnt, 1)
+
+Y = as.numeric(as.factor(Cornejo2025$Saliva$mode1$GenderID))
+Ycnt = Y - mean(Y)
+saliva_NPLS = triPLS1(processedSaliva$data, Ycnt, 1)
+
+Y = as.numeric(as.factor(Cornejo2025$Cytokines$mode1$GenderID))
+Ycnt = Y - mean(Y)
+cytokine_NPLS = triPLS1(processedCytokine$data, Ycnt, 1)
+```
