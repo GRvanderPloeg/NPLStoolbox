@@ -219,8 +219,29 @@ df[df$Metabolite == "X6SL.partial","Class"] = "Oligosaccharides"
 df[df$Metabolite == "Methionine","Class"] = "Amino acids and derivatives"
 df[70,"Metabolite"] = "tau.Methylhistidine" # Fix non-ascii tau character
 
-milkMetab$mode2 = df %>% select(-X,-index)
+# Repair metabolite names
+df[df$Metabolite == "X2.Aminobutyrate","Metabolite"] = "2-Aminobutyrate"
+df[df$Metabolite == "X2.Fucosyllactose","Metabolite"] = "2-Fucosyllactose"
+df[df$Metabolite == "X2.Hydroxybutyrate","Metabolite"] = "2-Hydroxybutyrate"
+df[df$Metabolite == "X2.Oxoglutarate","Metabolite"] = "2-Oxoglutarate"
+df[df$Metabolite == "X3.Fucosyllactose","Metabolite"] = "3-Fucosyllactose"
+df[df$Metabolite == "X3SL.partial","Metabolite"] = "3SL partial"
+df[df$Metabolite == "X6SL.partial","Metabolite"] = "6SL partial"
+df[df$Metabolite == "Unk..HMO.1.70.Sialylated","Metabolite"] = "Unk. HMO 1.70 Sialylated"
+df[df$Metabolite == "Unk..HMO.5.076","Metabolite"] = "Unk. HMO 5.076"
+df[df$Metabolite == "Unk..HMO.5.09","Metabolite"] = "Unk. HMO 5.09"
+df[df$Metabolite == "Unk..HMO.5.10","Metabolite"] = "Unk. HMO 5.10"
+df[df$Metabolite == "Unk..HMO.5.11","Metabolite"] = "Unk. HMO 5.11"
+df[df$Metabolite == "Unk..HMO.5.29","Metabolite"] = "Unk. HMO 5.29"
+df[df$Metabolite == "Unk..HMO.5.359","Metabolite"] = "Unk. HMO 5.359"
+df[df$Metabolite == "sn.Glycero.3.phosphocholine","Metabolite"] = "sn-Glycero-3-phosphocholine"
+df[df$Metabolite == "myo.Inositol","Metabolite"] = "myo-Inositol"
+df[df$Metabolite == "cis.Aconitate","Metabolite"] = "cis-Aconitate"
+df[df$Metabolite == "DSLNT.partial","Metabolite"] = "DSLNT partial"
+df[df$Metabolite == "O.Phosphocholine","Metabolite"] = "O-Phosphocholine"
+df[df$Metabolite == "O.Acetylcarnitine","Metabolite"] = "O-Acetylcarnitine"
 
+milkMetab$mode2 = df %>% select(-X,-index)
 # Old approach:
 #
 # I = length(unique(sampleInfo$subject))
