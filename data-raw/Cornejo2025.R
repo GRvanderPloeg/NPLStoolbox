@@ -126,10 +126,10 @@ df = read.csv("./data-raw/Cornejo2025/20241209_cytokines.csv", header=FALSE, sep
 featureMeta = read.csv("./data-raw/Cornejo2025/20241209_cytokines_featureMeta.csv", header=FALSE) %>% as_tibble()
 sampleInfo = read.csv("./data-raw/Cornejo2025/20241209_cytokines_sampleMeta.csv", header=FALSE, sep=" ") %>% as_tibble()
 colnames(sampleInfo) = c("subject", "GenderID", "newTimepoint", "unknown", "unknown2")
-#
-# temp = sampleInfo %>% select(subject, GenderID) %>% unique()
-# Y = as.numeric(as.factor(temp$GenderID))
-# Ycnt = Y - mean(Y)
+
+# Remove dilution factor using total protein
+dilutionFactor = sampleInfo %>% left_join(saliva_sampleMeta) %>% select(Total_protein_ug_ml) %>% pull()
+df = sweep(df, 1, dilutionFactor, FUN="/")
 
 # New approach per 20250402
 cytokine = parafac4microbiome::reshapeData(df, sampleInfo$subject, featureMeta, sampleInfo$newTimepoint)
@@ -139,6 +139,10 @@ colnames(cytokine$mode1) = c("subject", "index")
 cytokine$mode1 = cytokine$mode1 %>% left_join(saliva_sampleMeta %>% mutate(subject=as.character(subject)) %>% select(subject,GenderID) %>% unique()) %>% select(-index)
 cytokine$mode2 = cytokine$mode2 %>% select(-index)
 cytokine$mode3 = cytokine$mode3 %>% mutate(newTimepoint=timepointMetadata) %>% select(-timepointMetadata,-index)
+
+# Remove subject 9 and 19 due to being outliers
+cytokine$data = cytokine$data[-c(9,19),,]
+cytokine$mode1 = cytokine$mode1[-c(9,19),]
 
 # Process
 cytokine$data = log(cytokine$data + 0.1300)
