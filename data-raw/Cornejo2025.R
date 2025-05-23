@@ -146,6 +146,7 @@ cytokine$mode1 = cytokine$mode1[-c(9,19),]
 
 # Process
 cytokine$data = log(cytokine$data + 0.1300)
+cytokine$data = multiwayCenter(cytokine$data, 2)
 cytokine$data = multiwayCenter(cytokine$data, 1)
 cytokine$data = multiwayScale(cytokine$data, 2)
 
@@ -183,8 +184,32 @@ cytokine$data = multiwayScale(cytokine$data, 2)
 #
 # cytokineData = list("data"=cytokineCube_cnt_scl, "mode1"=cytokineCube_mode1, "mode2"=cytokineCube_mode2, "mode3"=cytokineCube_mode3)
 
+# Salivary biochemistry
+biochemistry = saliva_sampleMeta %>% select(-value, -BarcodeSequence, -LinkerPrimerSequence, -Niche, -Timepoint, -Age, -qPCR_16S_ng_ul, -FQ_ng_ul, -Participant_code, -Testosterone_nmol_L, -Free_testosterone_Vermeulen_pmol_L, -Estradiol_pmol_ml, -Description,-GenderID, -LH_U_L, -SHBG_nmol_L)
+Xlong = biochemistry %>% select(-subject,-newTimepoint) %>% as.matrix()
+biochemistry = parafac4microbiome::reshapeData(Xlong, biochemistry$subject, colnames(Xlong), biochemistry$newTimepoint)
+biochemistry$data = log(biochemistry$data + 1e-5)
+biochemistry$data = parafac4microbiome::multiwayCenter(biochemistry$data)
+biochemistry$data = parafac4microbiome::multiwayScale(biochemistry$data)
+
+# Change modes for consistency
+colnames(biochemistry$mode1) = c("subject", "index")
+biochemistry$mode1 = biochemistry$mode1 %>% left_join(saliva_sampleMeta %>% mutate(subject=as.character(subject)) %>% select(subject,GenderID) %>% unique()) %>% select(-index)
+biochemistry$mode2 = biochemistry$mode2 %>% select(-index)
+biochemistry$mode3 = biochemistry$mode3 %>% mutate(newTimepoint=timepointMetadata) %>% select(-timepointMetadata,-index)
+
+# Blood hormone levels
+blood_hormones = saliva_sampleMeta %>% select(subject, GenderID, newTimepoint, Free_testosterone_Vermeulen_pmol_L, Estradiol_pmol_ml, LH_U_L, SHBG_nmol_L)
+
+# Clinical measurements
+clinical = otherMeta
+
+# Store and save
 Cornejo2025 = list()
-Cornejo2025$Tongue = tongue
-Cornejo2025$Saliva = saliva
-Cornejo2025$Cytokines = cytokine
+Cornejo2025$Tongue_microbiome = tongue
+Cornejo2025$Salivary_microbiome = saliva
+Cornejo2025$Salivary_biochemistry = biochemistry
+Cornejo2025$Salivary_cytokines = cytokine
+Cornejo2025$Blood_hormones = blood_hormones
+Cornejo2025$Clinical_measurements = clinical
 usethis::use_data(Cornejo2025, overwrite = TRUE)
