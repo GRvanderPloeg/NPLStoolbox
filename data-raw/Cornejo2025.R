@@ -69,13 +69,6 @@ featureMeta = read.csv("./data-raw/Cornejo2025/20241209_cytokines_featureMeta.cs
 sampleInfo = read.csv("./data-raw/Cornejo2025/20241209_cytokines_sampleMeta.csv", header=FALSE, sep=" ") %>% as_tibble()
 colnames(sampleInfo) = c("subject", "GenderID", "newTimepoint", "unknown", "unknown2")
 
-# Remove dilution factor using total protein
-dilutionFactor = sampleInfo %>% left_join(saliva_sampleMeta) %>% select(Total_protein_ug_ml) %>% pull()
-df = sweep(df, 1, dilutionFactor, FUN="/")
-
-# Take log
-df = log(df + 0.1300)
-
 # Put into cube
 cytokine = parafac4microbiome::reshapeData(df, sampleInfo$subject, featureMeta, sampleInfo$newTimepoint)
 
@@ -85,22 +78,10 @@ cytokine$mode1 = cytokine$mode1 %>% left_join(saliva_sampleMeta %>% mutate(subje
 cytokine$mode2 = cytokine$mode2 %>% select(-index)
 cytokine$mode3 = cytokine$mode3 %>% mutate(newTimepoint=timepointMetadata) %>% select(-timepointMetadata,-index)
 
-# Remove subject 18 and 27 due to being outliers
-cytokine$data = cytokine$data[-c(9,19),,]
-cytokine$mode1 = cytokine$mode1[-c(9,19),]
-
-# Process
-# cytokine$data = multiwayCenter(cytokine$data, 2)
-cytokine$data = multiwayCenter(cytokine$data, 1)
-cytokine$data = multiwayScale(cytokine$data, 2)
-
 # Salivary biochemistry
 biochemistry = saliva_sampleMeta %>% select(-value, -BarcodeSequence, -LinkerPrimerSequence, -Niche, -Timepoint, -Age, -qPCR_16S_ng_ul, -FQ_ng_ul, -Participant_code, -Testosterone_nmol_L, -Free_testosterone_Vermeulen_pmol_L, -Estradiol_pmol_ml, -Description,-GenderID, -LH_U_L, -SHBG_nmol_L)
 Xlong = biochemistry %>% select(-subject,-newTimepoint) %>% as.matrix()
 biochemistry = parafac4microbiome::reshapeData(Xlong, biochemistry$subject, colnames(Xlong), biochemistry$newTimepoint)
-biochemistry$data = log(biochemistry$data + 1e-5)
-biochemistry$data = parafac4microbiome::multiwayCenter(biochemistry$data)
-biochemistry$data = parafac4microbiome::multiwayScale(biochemistry$data)
 
 # Change modes for consistency
 colnames(biochemistry$mode1) = c("subject", "index")
