@@ -202,7 +202,7 @@ biochemistry$mode3 = biochemistry$mode3 %>% mutate(newTimepoint=timepointMetadat
 blood_hormones = saliva_sampleMeta %>% select(subject, GenderID, newTimepoint, Free_testosterone_Vermeulen_pmol_L, Estradiol_pmol_ml, LH_U_L, SHBG_nmol_L)
 
 # Clinical measurements
-clinical = otherMeta
+clinical = otherMeta %>% left_join(saliva_sampleMeta %>% filter(newTimepoint==12) %>% select(subject, Age))
 
 # Store and save
 Cornejo2025 = list()
