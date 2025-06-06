@@ -1,10 +1,17 @@
 Package: NPLStoolbox
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Title: N-Way Partial Least Squares Modelling of Multi-Way Data
+Version: 0.1.0
+Authors@R: c(
+    person("Geert Roelof", "van der Ploeg", , "g.r.ploeg@uva.nl", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0007-5204-3386")),
+    person("Johan", "Westerhuis", , "j.a.westerhuis@uva.nl", role = "ctb",
+           comment = c(ORCID = "0000-0002-6747-9779")),
+    person("Anna", "Heintz-Buschart", , "a.u.s.heintzbuschart@uva.nl", role = "ctb",
+           comment = c(ORCID = "0000-0002-9780-1933")),
+    person("Age", "Smilde", , "a.k.smilde@uva.nl", role = "ctb",
+           comment = c(ORCID = "0000-0002-3052-4644")),
+    person("University of Amsterdam", role = c("cph", "fnd")))
+Description: Creation and selection of N-way Partial Least Squares (NPLS) models. Selection of the optimal number of components can be done using ncrossreg(). NPLS was originally described by Bro 1996 <doi:10.1002/(SICI)1099-128X(199601)10:1<47::AID-CEM400>3.0.CO;2-C>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -23,6 +30,6 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: https://github.com/GRvanderPloeg/NPLStoolbox, http://grvanderploeg.com/NPLStoolbox/
+URL: https://github.com/GRvanderPloeg/NPLStoolbox, https://grvanderploeg.com/NPLStoolbox/
 BugReports: https://github.com/GRvanderPloeg/NPLStoolbox/issues
 VignetteBuilder: knitr
