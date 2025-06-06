@@ -11,7 +11,7 @@ Authors@R: c(
     person("Age", "Smilde", , "a.k.smilde@uva.nl", role = "ctb",
            comment = c(ORCID = "0000-0002-3052-4644")),
     person("University of Amsterdam", role = c("cph", "fnd")))
-Description: Creation and selection of N-way Partial Least Squares (NPLS) models. Selection of the optimal number of components can be done using ncrossreg(). NPLS was originally described by Bro 1996 <doi:10.1002/(SICI)1099-128X(199601)10:1<47::AID-CEM400>3.0.CO;2-C>.
+Description: Creation and selection of N-way Partial Least Squares (NPLS) models. Selection of the optimal number of components can be done using ncrossreg(). NPLS was originally described by Rasmus Bro, see <doi:10.1002/%28SICI%291099-128X%28199601%2910%3A1%3C47%3A%3AAID-CEM400%3E3.0.CO%3B2-C>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

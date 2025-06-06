@@ -17,9 +17,10 @@
 #' @export
 #'
 #' @examples
-#' Y = as.numeric(as.factor(Cornejo2025$Tongue$mode1$GenderID))
-#' Ycnt = Y - mean(Y)
-#' ncrossreg(Cornejo2025$Tongue$data, Ycnt, cvFolds=2)
+#' set.seed(123)
+#' X <- array(rnorm(25 * 5 * 4), dim = c(25, 5, 4))
+#' y <- rnorm(25)  # Random response variable
+#' result = ncrossreg(X, y, cvFolds=2, maxNumComponents=2)
 ncrossreg = function(X, y,
                      maxNumComponents = 5,
                      maxIter = 120,

@@ -30,7 +30,8 @@ is used: the subjects are split in order into \code{cvFolds} groups. For each fo
 training set consists of the other folds and the test set is the current fold.
 }
 \examples{
-Y = as.numeric(as.factor(Cornejo2025$Tongue$mode1$GenderID))
-Ycnt = Y - mean(Y)
-ncrossreg(Cornejo2025$Tongue$data, Ycnt, cvFolds=2)
+set.seed(123)
+X <- array(rnorm(100 * 5 * 4), dim = c(100, 5, 4))  # Random tensor (100 samples, 5 vars, 4 vars)
+y <- rnorm(100)  # Random response variable
+ncrossreg(X, y, cvFolds=2, maxNumComponents=2)
 }

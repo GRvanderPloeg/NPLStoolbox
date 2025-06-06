@@ -9,9 +9,13 @@
 
 A list object with three elements:
 \describe{
-\item{Tongue}{List object of the tongue longitudinal microbiota data.}
-\item{Saliva}{List object of the saliva longitudinal microbiota data.}
-\item{Cytokines}{List object of the longitudinal salivary cytokines data.}
+\item{Tongue_microbiome}{List object of the tongue longitudinal microbiota data.}
+\item{Salivary_microbiome}{List object of the saliva longitudinal microbiota data.}
+\item{Salivary_cytokines}{List object of the longitudinal salivary cytokine data.}
+\item{Salivary_biochemistry}{List object of the longitudinal salivary biochemistry data.}
+\item{Circulatory_hormones}{List object of the longitudinal circulatory hormone data.}
+\item{Clinical_measurements}{List object of the longitudinal clinical outcome data.}
+\item{Subject_metadata}{Matrix with subject metadata.}
 }
 }
 }

@@ -10,15 +10,39 @@
 coverage](https://codecov.io/gh/GRvanderPloeg/NPLStoolbox/graph/badge.svg)](https://app.codecov.io/gh/GRvanderPloeg/NPLStoolbox)
 <!-- badges: end -->
 
+## Overview
+
 The `NPLStoolbox` allows researchers to use the N-way Partial Least
 Squares method for their multi-way data.
 
-Currently it contains a work in process `triPLS1()` function and the
-example datasets `Cornejo2025` and `Jakobsen2025`.
+- `ncrossreg()` allows the user to identify the appropriate number of
+  NPLS components for their data.
+- `triPLS1()` allows the user to create an NPLS model.
+- `npred()` allows the user to predict y for new data.
 
-More will follow!
+This package also comes with an example dataset `Cornejo2025`: a
+clinical observational cohort study of 39 transgender persons starting
+gender-affirming hormone therapy, containing longitudinally measured
+tongue microbiome, salivary microbiome, salivary cytokine, salivary
+biochemistry, and circulatory hormone levels (doi TBD).
+
+## Documentation
+
+A basic introduction to the package using the example dataset is given
+in `vignette("Cornejo2025_analysis")`.
+
+This vignette and all function documentation can be found
+[here](https://grvanderploeg.com/NPLStoolbox/).
 
 ## Installation
+
+The `NPLStoolbox` package can be installed from CRAN using:
+
+``` r
+install.packages("NPLStoolbox")
+```
+
+## Development version
 
 You can install the development version of NPLStoolbox from
 [GitHub](https://github.com/) with:
@@ -28,12 +52,27 @@ You can install the development version of NPLStoolbox from
 pak::pak("GRvanderPloeg/NPLStoolbox")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+## Usage
 
 ``` r
+library(parafac4microbiome)
 library(NPLStoolbox)
-## basic example code
-#TBD
+set.seed(123)
+
+# Process one of the data cubes from Cornejo2025
+processedTongue = processDataCube(Cornejo2025$Tongue_microbiome, sparsityThreshold=0.5, considerGroups=TRUE, groupVariable="GenderID", centerMode=1, scaleMode=2)
+
+# Prepare Y: binarized gender identity
+Y = as.numeric(as.factor(Cornejo2025$Tongue_microbiome$mode1$GenderID))
+Ycnt = Y - mean(Y)
+
+# Make a one-component NPLS model
+model = triPLS1(processedTongue$data, Ycnt, 1)
 ```
+
+## Getting help
+
+If you encounter an unexpected error or a clear bug, please file an
+issue with a minimal reproducible example here on
+[Github](https://github.com/GRvanderPloeg/NPLStoolbox/issues). For
+questions or other types of feedback, feel free to send an email.
