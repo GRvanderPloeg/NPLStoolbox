@@ -4,7 +4,7 @@
 #' with subjects in mode 1, features in mode 2 and time in mode 3.
 #'
 #' @format ## 'Cornejo2025'
-#' A list object with three elements:
+#' A list object with seven elements:
 #' \describe{
 #'     \item{Tongue_microbiome}{List object of the tongue longitudinal microbiota data.}
 #'     \item{Salivary_microbiome}{List object of the saliva longitudinal microbiota data.}

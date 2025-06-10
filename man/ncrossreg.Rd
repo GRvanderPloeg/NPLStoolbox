@@ -31,7 +31,7 @@ training set consists of the other folds and the test set is the current fold.
 }
 \examples{
 set.seed(123)
-X <- array(rnorm(100 * 5 * 4), dim = c(100, 5, 4))  # Random tensor (100 samples, 5 vars, 4 vars)
-y <- rnorm(100)  # Random response variable
-ncrossreg(X, y, cvFolds=2, maxNumComponents=2)
+X <- array(rnorm(25 * 5 * 4), dim = c(25, 5, 4))
+y <- rnorm(25)  # Random response variable
+result = ncrossreg(X, y, cvFolds=2, maxNumComponents=2)
 }
