@@ -7,7 +7,7 @@
 \format{
 \subsection{'Cornejo2025'}{
 
-A list object with three elements:
+A list object with seven elements:
 \describe{
 \item{Tongue_microbiome}{List object of the tongue longitudinal microbiota data.}
 \item{Salivary_microbiome}{List object of the saliva longitudinal microbiota data.}
