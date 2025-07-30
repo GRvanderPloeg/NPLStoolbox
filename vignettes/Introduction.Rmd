@@ -1,8 +1,8 @@
 ---
-title: "Cornejo2025_analysis"
+title: "Introduction"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Cornejo2025_analysis}
+  %\VignetteIndexEntry{Introduction}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -45,3 +45,4 @@ Y = as.numeric(as.factor(Cornejo2025$Salivary_cytokines$mode1$GenderID))
 Ycnt = Y - mean(Y)
 cytokine_NPLS = triPLS1(processedCytokine$data, Ycnt, 1)
 ```
+

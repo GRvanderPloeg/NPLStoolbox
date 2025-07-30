@@ -1,13 +1,19 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# NPLStoolbox <img src="man/figures/logo.png" align="right" height="139" alt="" />
+# NPLStoolbox <img src="man/figures/logo.png" align="right" height="139"/>
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/GRvanderPloeg/NPLStoolbox/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/GRvanderPloeg/NPLStoolbox/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/GRvanderPloeg/NPLStoolbox/graph/badge.svg)](https://app.codecov.io/gh/GRvanderPloeg/NPLStoolbox)
+![CRAN/METACRAN Version](https://img.shields.io/cran/v/NPLStoolbox)
+![GitHub
+Release](https://img.shields.io/github/v/release/GRvanderPloeg/NPLStoolbox)
+![GitHub R package
+version](https://img.shields.io/github/r-package/v/GRvanderPloeg/NPLStoolbox)
+
 <!-- badges: end -->
 
 ## Overview
@@ -29,7 +35,7 @@ biochemistry, and circulatory hormone levels (doi TBD).
 ## Documentation
 
 A basic introduction to the package using the example dataset is given
-in `vignette("Cornejo2025_analysis")`.
+in `vignette("Introduction")`.
 
 This vignette and all function documentation can be found
 [here](https://grvanderploeg.com/NPLStoolbox/).

@@ -13,26 +13,27 @@ knitr::opts_chunk$set(
 )
 ```
 
-# NPLStoolbox <img src="man/figures/logo.png" align="right" height="139" alt="" />
+# NPLStoolbox <img src="man/figures/logo.png" align="right" height="139"/>
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/GRvanderPloeg/NPLStoolbox/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/GRvanderPloeg/NPLStoolbox/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/GRvanderPloeg/NPLStoolbox/graph/badge.svg)](https://app.codecov.io/gh/GRvanderPloeg/NPLStoolbox)
+
+[![R-CMD-check](https://github.com/GRvanderPloeg/NPLStoolbox/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/GRvanderPloeg/NPLStoolbox/actions/workflows/R-CMD-check.yaml) [![Codecov test coverage](https://codecov.io/gh/GRvanderPloeg/NPLStoolbox/graph/badge.svg)](https://app.codecov.io/gh/GRvanderPloeg/NPLStoolbox) ![CRAN/METACRAN Version](https://img.shields.io/cran/v/NPLStoolbox) ![GitHub Release](https://img.shields.io/github/v/release/GRvanderPloeg/NPLStoolbox) ![GitHub R package version](https://img.shields.io/github/r-package/v/GRvanderPloeg/NPLStoolbox)
+
 <!-- badges: end -->
 
 ## Overview
 
 The `NPLStoolbox` allows researchers to use the N-way Partial Least Squares method for their multi-way data.
 
-- `ncrossreg()` allows the user to identify the appropriate number of NPLS components for their data.
-- `triPLS1()` allows the user to create an NPLS model.
-- `npred()` allows the user to predict y for new data.
+-   `ncrossreg()` allows the user to identify the appropriate number of NPLS components for their data.
+-   `triPLS1()` allows the user to create an NPLS model.
+-   `npred()` allows the user to predict y for new data.
 
 This package also comes with an example dataset `Cornejo2025`: a clinical observational cohort study of 39 transgender persons starting gender-affirming hormone therapy, containing longitudinally measured tongue microbiome, salivary microbiome, salivary cytokine, salivary biochemistry, and circulatory hormone levels (doi TBD).
 
 ## Documentation
 
-A basic introduction to the package using the example dataset is given in `vignette("Cornejo2025_analysis")`.
+A basic introduction to the package using the example dataset is given in `vignette("Introduction")`.
 
 This vignette and all function documentation can be found [here](https://grvanderploeg.com/NPLStoolbox/).
 
