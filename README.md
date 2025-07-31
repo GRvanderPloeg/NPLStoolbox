@@ -26,11 +26,16 @@ Squares method for their multi-way data.
 - `triPLS1()` allows the user to create an NPLS model.
 - `npred()` allows the user to predict y for new data.
 
-This package also comes with an example dataset `Cornejo2025`: a
-clinical observational cohort study of 39 transgender persons starting
-gender-affirming hormone therapy, containing longitudinally measured
-tongue microbiome, salivary microbiome, salivary cytokine, salivary
-biochemistry, and circulatory hormone levels (doi TBD).
+This package also comes with two example datasets:
+
+- `Cornejo2025`: a clinical observational cohort study of 39 transgender
+  persons starting gender-affirming hormone therapy, containing
+  longitudinally measured tongue microbiome, salivary microbiome,
+  salivary cytokine, salivary biochemistry, and circulatory hormone
+  levels (doi TBD).
+- `Jakobsen2025`: an observational cohort of 169 mother-infant dyads
+  investigating the effect of maternal obesity on human milk and the
+  infant gut microbiome <https://doi.org/10.21203/rs.3.rs-6244750/v1>.
 
 ## Documentation
 
