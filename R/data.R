@@ -23,7 +23,7 @@
 #' with subjects in mode 1, features in mode 2 and time in mode 3.
 #'
 #' @format ## 'Jakobsen2025'
-#' A list object with seven elements:
+#' A list object with three elements:
 #' \describe{
 #'     \item{faeces}{List object of the longitudinal infant faecal microbiota data.}
 #'     \item{milkMicrobiome}{List object of the longitudinal HM microbiota data.}
