@@ -1,7 +1,9 @@
 # NPLStoolbox 1.1.0
 
+* Addition of `Jakobsen2025` dataset.
 * Addition of TIFN2, MAINHEALTH, GOHTRANS, and AP articles.
 * Renamed Cornejo2025_analysis vignette to Introduction.
+* Inclusion of revdepcheck results.
 
 # NPLStoolbox 1.0.0
 
