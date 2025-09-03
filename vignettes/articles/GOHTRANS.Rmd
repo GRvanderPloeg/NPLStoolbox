@@ -127,7 +127,35 @@ testMetadata = function(model, comp, metadata){
 }
 ```
 
-```{r processing}
+```{r processing part 1}
+processedTongue = processDataCube(NPLStoolbox::Cornejo2025$Tongue_microbiome, sparsityThreshold = 0.5, considerGroups=TRUE, groupVariable="GenderID", CLR=TRUE, centerMode=1, scaleMode=2)
+processedSaliva = processDataCube(NPLStoolbox::Cornejo2025$Salivary_microbiome, sparsityThreshold = 0.5, considerGroups=TRUE, groupVariable="GenderID", CLR=TRUE, centerMode=1, scaleMode=2)
+
+processedCytokines = NPLStoolbox::Cornejo2025$Salivary_cytokines
+processedCytokines$data = log(processedCytokines$data + 0.1300)
+# Remove subject 1, 18, 19, and 27 due to being an outlier
+processedCytokines$data = processedCytokines$data[-c(1,9,10,19),,]
+processedCytokines$mode1 = processedCytokines$mode1[-c(1,9,10,19),]
+processedCytokines$data = multiwayCenter(processedCytokines$data, 1)
+processedCytokines$data = multiwayScale(processedCytokines$data, 2)
+
+processedBiochemistry = NPLStoolbox::Cornejo2025$Salivary_biochemistry
+processedBiochemistry$data = log(processedBiochemistry$data)
+processedBiochemistry$data = multiwayCenter(processedBiochemistry$data, 1)
+processedBiochemistry$data = multiwayScale(processedBiochemistry$data, 2)
+
+processedHormones = NPLStoolbox::Cornejo2025$Circulatory_hormones
+processedHormones$data = log(processedHormones$data)
+processedHormones$data = multiwayCenter(processedHormones$data, 1)
+processedHormones$data = multiwayScale(processedHormones$data, 2)
+```
+
+```{r prepare y}
+deltaT = NPLStoolbox::Cornejo2025$Circulatory_hormones$data[,1,2] - NPLStoolbox::Cornejo2025$Circulatory_hormones$data[,1,1]
+outcome = processedHormones$mode1 %>% mutate(deltaT = deltaT) %>% filter(deltaT != "NA")
+```
+
+```{r processing part 2}
 processedTongue = processDataCube(NPLStoolbox::Cornejo2025$Tongue_microbiome, sparsityThreshold = 0.5, considerGroups=TRUE, groupVariable="GenderID", CLR=TRUE, centerMode=FALSE, scaleMode=FALSE)
 mask = processedTongue$mode1$subject %in% outcome$subject
 processedTongue$mode1 = processedTongue$mode1[mask,]
