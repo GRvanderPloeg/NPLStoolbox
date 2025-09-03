@@ -26,10 +26,15 @@ Depends:
     R (>= 2.10)
 LazyData: true
 Suggests: 
+    CMTFtoolbox,
+    ggpattern,
     ggplot2,
     ggpubr,
     knitr,
+    readr,
     rmarkdown,
+    scales,
+    stringr,
     testthat (>= 3.0.0),
     tidyr
 Config/testthat/edition: 3
