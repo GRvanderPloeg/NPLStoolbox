@@ -190,7 +190,7 @@ processedBiochemistry$data = multiwayCenter(processedBiochemistry$data, 1)
 processedBiochemistry$data = multiwayScale(processedBiochemistry$data, 2)
 ```
 
-```{r prepare y}
+```{r prepare y per block}
 Y = processedTongue$mode1 %>% left_join(outcome) %>% select(deltaT) %>% pull()
 Ycnt = Y - mean(Y)
 Ynorm_tongue = Ycnt / norm(Ycnt, "2")
