@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>TIFN2 • NPLStoolbox</title>
+<title>TIFN2: Red fluorescent plaque development in gingivitis • NPLStoolbox</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="TIFN2">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="TIFN2: Red fluorescent plaque development in gingivitis">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -33,11 +33,11 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/AP.html">AP</a></li>
-    <li><a class="dropdown-item" href="../articles/GOHTRANS.html">GOHTRANS</a></li>
+<li><a class="dropdown-item" href="../articles/AP.html">AP: pain perception in apical periodontitis</a></li>
+    <li><a class="dropdown-item" href="../articles/GOHTRANS.html">GOHTRANS: gender-affirming hormone therapy</a></li>
     <li><a class="dropdown-item" href="../articles/Introduction.html">Introduction</a></li>
-    <li><a class="dropdown-item" href="../articles/MAINHEALTH.html">MAINHEALTH</a></li>
-    <li><a class="dropdown-item" href="../articles/TIFN2.html">TIFN2</a></li>
+    <li><a class="dropdown-item" href="../articles/MAINHEALTH.html">MAINHEALTH: intergenerational obesity transmission</a></li>
+    <li><a class="dropdown-item" href="../articles/TIFN2.html">TIFN2: Red fluorescent plaque development in gingivitis</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -59,8 +59,9 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>TIFN2</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>TIFN2: Red fluorescent plaque development in gingivitis</h1>
             
+            <h4 data-toc-skip class="date">2025-08-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/GRvanderPloeg/NPLStoolbox/blob/master/vignettes/articles/TIFN2.Rmd" class="external-link"><code>vignettes/articles/TIFN2.Rmd</code></a></small>
       <div class="d-none name"><code>TIFN2.Rmd</code></div>
@@ -68,6 +69,12 @@
 
     
     
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>This article presents the NPLS results of the TIFN2 dataset discussed
+in Chapter 4 of my dissertation.</p>
+</div>
 <div class="section level2">
 <h2 id="preamble">Preamble<a class="anchor" aria-label="anchor" href="#preamble"></a>
 </h2>
@@ -220,86 +227,34 @@
 <span><span class="va">Ymetab</span> <span class="op">=</span> <span class="va">processedMetabolomics</span><span class="op">$</span><span class="va">mode1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">vanderPloeg2024</span><span class="op">$</span><span class="va">red_fluorescenc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">subject</span>,<span class="va">Area_delta_R30</span>,<span class="va">day</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">day</span><span class="op">==</span><span class="fl">14</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Area_delta_R30</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(subject)`</span></span>
 <span><span class="va">Ymetab_cnt</span> <span class="op">=</span> <span class="va">Ymetab</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Ymetab</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># CV_tongue = NPLStoolbox::ncrossreg(processedTongue$data, Ycnt, maxNumComponents = 10)</span></span>
-<span><span class="co"># CV_lowling = NPLStoolbox::ncrossreg(processedLowling$data, Ycnt, maxNumComponents = 10)</span></span>
-<span><span class="co"># CV_lowinter = NPLStoolbox::ncrossreg(processedLowinter$data, Ycnt, maxNumComponents = 10)</span></span>
-<span><span class="co"># CV_upling = NPLStoolbox::ncrossreg(processedUpling$data, Ycnt, maxNumComponents = 10)</span></span>
-<span><span class="co"># CV_upinter = NPLStoolbox::ncrossreg(processedUpinter$data, Ycnt, maxNumComponents = 10)</span></span>
-<span><span class="co"># CV_saliva = NPLStoolbox::ncrossreg(processedSaliva$data, Ycnt, maxNumComponents = 10)</span></span>
-<span><span class="co"># CV_metab = NPLStoolbox::ncrossreg(processedMetabolomics$data, Ymetab_cnt, maxNumComponents = 10)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># saveRDS(CV_tongue, "./NPLS_CV_tongue.RDS")</span></span>
-<span><span class="co"># saveRDS(CV_lowling, "./NPLS_CV_lowling.RDS")</span></span>
-<span><span class="co"># saveRDS(CV_lowinter, "./NPLS_CV_lowinter.RDS")</span></span>
-<span><span class="co"># saveRDS(CV_upling, "./NPLS_CV_upling.RDS")</span></span>
-<span><span class="co"># saveRDS(CV_upinter, "./NPLS_CV_upinter.RDS")</span></span>
-<span><span class="co"># saveRDS(CV_saliva, "./NPLS_CV_saliva.RDS")</span></span>
-<span><span class="co"># saveRDS(CV_metab, "./NPLS_CV_metab.RDS")</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># CV_tongue = readRDS("./NPLS_CV_tongue.RDS")</span></span>
-<span><span class="co"># CV_lowling = readRDS("./NPLS_CV_lowling.RDS")</span></span>
-<span><span class="co"># CV_lowinter = readRDS("./NPLS_CV_lowinter.RDS")</span></span>
-<span><span class="co"># CV_upling = readRDS("./NPLS_CV_upling.RDS")</span></span>
-<span><span class="co"># CV_upinter = readRDS("./NPLS_CV_upinter.RDS")</span></span>
-<span><span class="co"># CV_saliva = readRDS("./NPLS_CV_saliva.RDS")</span></span>
-<span><span class="co"># CV_metab = readRDS("./NPLS_CV_metab.RDS")</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># a=CV_tongue$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
-<span><span class="co"># b=CV_tongue$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
-<span><span class="co"># ggarrange(a,b)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># a=CV_lowling$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
-<span><span class="co"># b=CV_lowling$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
-<span><span class="co"># ggarrange(a,b)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># a=CV_lowinter$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
-<span><span class="co"># b=CV_lowinter$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
-<span><span class="co"># ggarrange(a,b)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># a=CV_upling$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
-<span><span class="co"># b=CV_upling$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
-<span><span class="co"># ggarrange(a,b)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># a=CV_upinter$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
-<span><span class="co"># b=CV_upinter$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
-<span><span class="co"># ggarrange(a,b)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># a=CV_saliva$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
-<span><span class="co"># b=CV_saliva$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
-<span><span class="co"># ggarrange(a,b)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># a=CV_metab$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
-<span><span class="co"># b=CV_metab$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
-<span><span class="co"># ggarrange(a,b)</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># npls_tongue = NPLStoolbox::triPLS1(processedTongue$data, Ycnt, 3)</span></span>
-<span><span class="co"># npls_lowling = NPLStoolbox::triPLS1(processedLowling$data, Ycnt, 2)</span></span>
-<span><span class="co"># npls_lowinter = NPLStoolbox::triPLS1(processedLowinter$data, Ycnt, 3)</span></span>
-<span><span class="co"># npls_upling = NPLStoolbox::triPLS1(processedUpling$data, Ycnt, 1)</span></span>
-<span><span class="co"># npls_upinter = NPLStoolbox::triPLS1(processedUpinter$data, Ycnt, 1)</span></span>
-<span><span class="co"># npls_saliva = NPLStoolbox::triPLS1(processedSaliva$data, Ycnt, 1)</span></span>
-<span><span class="co"># npls_metab = NPLStoolbox::triPLS1(processedMetabolomics$data, Ymetab_cnt, 1)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># saveRDS(npls_tongue, "./NPLS_tongue.RDS")</span></span>
-<span><span class="co"># saveRDS(npls_lowling, "./NPLS_lowling.RDS")</span></span>
-<span><span class="co"># saveRDS(npls_lowinter, "./NPLS_lowinter.RDS")</span></span>
-<span><span class="co"># saveRDS(npls_upling, "./NPLS_upling.RDS")</span></span>
-<span><span class="co"># saveRDS(npls_upinter, "./NPLS_upinter.RDS")</span></span>
-<span><span class="co"># saveRDS(npls_saliva, "./NPLS_saliva.RDS")</span></span>
-<span><span class="co"># saveRDS(npls_metab, "./NPLS_metab.RDS")</span></span>
-<span></span>
-<span><span class="va">npls_tongue</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_tongue.RDS"</span><span class="op">)</span></span>
-<span><span class="va">npls_lowling</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_lowling.RDS"</span><span class="op">)</span></span>
-<span><span class="va">npls_lowinter</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_lowinter.RDS"</span><span class="op">)</span></span>
-<span><span class="va">npls_upling</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_upling.RDS"</span><span class="op">)</span></span>
-<span><span class="va">npls_upinter</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_upinter.RDS"</span><span class="op">)</span></span>
-<span><span class="va">npls_saliva</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_saliva.RDS"</span><span class="op">)</span></span>
-<span><span class="va">npls_metab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_metab.RDS"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="tongue-microbiome">Tongue microbiome<a class="anchor" aria-label="anchor" href="#tongue-microbiome"></a>
 </h2>
+<p>NPLS was subsequently applied to supervise the decomposition using
+the percentage of sites that were covered in red fluorescent plaque
+(RF%) as dependent variable (y). The model selection procedure revealed
+that three components were appropriate due to the observation of an
+elbow in the variance explained for X, explaining 31.3% of variation in
+X and 71.7% of variation in y. The commented code below performs the
+procedure, and is not rerun here due to computational limitations.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># CV_tongue = NPLStoolbox::ncrossreg(processedTongue$data, Ycnt, maxNumComponents = 10)</span></span>
+<span><span class="co"># a=CV_tongue$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
+<span><span class="co"># b=CV_tongue$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
+<span><span class="co"># ggarrange(a,b)</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># npls_tongue = NPLStoolbox::triPLS1(processedTongue$data, Ycnt, 3)</span></span>
+<span><span class="va">npls_tongue</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_tongue.RDS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">npls_tongue</span><span class="op">$</span><span class="va">varExpX</span></span>
+<span><span class="co">#&gt; [1] 31.32394</span></span>
+<span><span class="va">npls_tongue</span><span class="op">$</span><span class="va">varExpY</span></span>
+<span><span class="co">#&gt; [1] 71.68906</span></span></code></pre></div>
+<p>As expected, the first NPLS component captured variation exclusively
+associated with RF%, while the second component captured variation
+exclusively associated with subject age, and the third component
+captured variation associated with plaque% and subject age.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">testMetadata</span><span class="op">(</span><span class="va">npls_tongue</span>, <span class="fl">1</span>, <span class="va">processedTongue</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             Term  Estimate                                         CI</span></span>
@@ -475,11 +430,48 @@
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">c</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20tongue%20comp%203-3.png" width="700"></p>
+<p>Positively loaded microbiota including Peptostreptococcus stomatis,
+Veillonella massiliensis, Porphyromonas pasteri, Lachnoanaerobaculum
+cf., Oribacterium parvum, Fusobacterium periodonticum, Aggregatibacter
+segnis, Granulicatella elegans, Capnocytophaga leadbetteri, and
+Veillonella parvula / rogosae / tobetsuensis were enriched in high
+responders and depleted in low responders. Conversely, negatively loaded
+microbiota including Prevotella jejuni / melaninogenica, Rothia
+dentocariosa, Streptococcus cristatus / sinensis, Veillonella atypica /
+dispar, Prevotella melaninogenica / scopos, Stomatobaculum longum,
+Rothia mucilaginosa, Actinomyces odontolyticus, Prevotella salivae, and
+Prevotella veroralis were enriched in low responders and depleted in
+high responders. The time mode loadings of the component indicated that
+inter-subject differences due to RF% were relatively constant, but
+transiently decreased during the intervention.</p>
 </div>
 <div class="section level2">
 <h2 id="lower-jaw-lingual-microbiome">Lower jaw lingual microbiome<a class="anchor" aria-label="anchor" href="#lower-jaw-lingual-microbiome"></a>
 </h2>
+<p>NPLS was subsequently applied to supervise the decomposition using
+the percentage of sites that were covered in red fluorescent plaque
+(RF%) as the dependent variable (y). The model selection procedure
+revealed that two components corresponded to the RMSECV minimum,
+explaining 13.2% of variation in X and 73.9% of variation in y,
+respectively. The commented code below performs the procedure, and is
+not rerun here due to computational limitations.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># CV_lowling = NPLStoolbox::ncrossreg(processedLowling$data, Ycnt, maxNumComponents = 10)</span></span>
+<span><span class="co"># a=CV_lowling$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
+<span><span class="co"># b=CV_lowling$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
+<span><span class="co"># ggarrange(a,b)</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># npls_lowling = NPLStoolbox::triPLS1(processedLowling$data, Ycnt, 2)</span></span>
+<span><span class="va">npls_lowling</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_lowling.RDS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">npls_lowling</span><span class="op">$</span><span class="va">varExpX</span></span>
+<span><span class="co">#&gt; [1] 13.27838</span></span>
+<span><span class="va">npls_lowling</span><span class="op">$</span><span class="va">varExpY</span></span>
+<span><span class="co">#&gt; [1] 73.93845</span></span></code></pre></div>
+<p>As expected, the first NPLS component captured variation exclusively
+associated with RF%, while the second component captured variation
+exclusively associated with subject gender.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">testMetadata</span><span class="op">(</span><span class="va">npls_lowling</span>, <span class="fl">1</span>, <span class="va">processedLowling</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             Term  Estimate                                          CI</span></span>
 <span><span class="co">#&gt; 1  plaquepercent  3.715363 -0.000645113811345087 – 0.00807583996130901</span></span>
@@ -506,7 +498,7 @@
 <span><span class="co">#&gt; 3 0.67038968 0.6703897</span></span>
 <span><span class="co">#&gt; 4 0.04668113 0.2334057</span></span>
 <span><span class="co">#&gt; 5 0.52608794 0.6576099</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">testFeatures</span><span class="op">(</span><span class="va">npls_lowling</span>, <span class="va">processedLowling</span>, <span class="fl">1</span>, <span class="st">"Area_delta_R30"</span><span class="op">)</span> <span class="co"># flip</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(subject, RFgroup)`</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(subject, age, gender)`</span></span>
@@ -542,13 +534,13 @@
 <span></span>
 <span><span class="va">a</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20lowling%20comp%201-1.png" width="700"></p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20lowling%20comp%201-2.png" width="700"></p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">c</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20lowling%20comp%201-3.png" width="700"></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">testFeatures</span><span class="op">(</span><span class="va">npls_lowling</span>, <span class="va">processedLowling</span>, <span class="fl">2</span>, <span class="st">"gender"</span><span class="op">)</span> <span class="co"># no flip</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(subject, RFgroup)`</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(subject, age, gender)`</span></span>
@@ -584,17 +576,40 @@
 <span></span>
 <span><span class="va">a</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20lowling%20comp%202-1.png" width="700"></p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20lowling%20comp%202-2.png" width="700"></p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">c</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20lowling%20comp%202-3.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="lower-jaw-interproximal-microbiome">Lower jaw interproximal microbiome<a class="anchor" aria-label="anchor" href="#lower-jaw-interproximal-microbiome"></a>
 </h2>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<p>NPLS was subsequently applied to supervise the decomposition using
+the percentage of sites that were covered in red fluorescent plaque
+(RF%) as dependent variable (y). The model selection procedure revealed
+that three components were appropriate due to a marked improvement in
+RMSECV, explaining 9.8% of variation in X and 94.0% of variation in y,
+respectively. The commented code below performs the procedure, and is
+not rerun here due to computational limitations.</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># CV_lowinter = NPLStoolbox::ncrossreg(processedLowinter$data, Ycnt, maxNumComponents = 10)</span></span>
+<span><span class="co"># a=CV_lowinter$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
+<span><span class="co"># b=CV_lowinter$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
+<span><span class="co"># ggarrange(a,b)</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># npls_lowinter = NPLStoolbox::triPLS1(processedLowinter$data, Ycnt, 3)</span></span>
+<span><span class="va">npls_lowinter</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_lowinter.RDS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">npls_lowinter</span><span class="op">$</span><span class="va">varExpX</span></span>
+<span><span class="co">#&gt; [1] 9.792967</span></span>
+<span><span class="va">npls_lowinter</span><span class="op">$</span><span class="va">varExpY</span></span>
+<span><span class="co">#&gt; [1] 93.98916</span></span></code></pre></div>
+<p>As expected, the first NPLS component captured variation exclusively
+associated with RF%, while the second and third components were not
+interpretable.</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">testMetadata</span><span class="op">(</span><span class="va">npls_lowinter</span>, <span class="fl">1</span>, <span class="va">processedLowinter</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             Term   Estimate                                         CI</span></span>
 <span><span class="co">#&gt; 1  plaquepercent  3.3096526 -0.00145265904366952 – 0.00807196416821377</span></span>
@@ -634,7 +649,7 @@
 <span><span class="co">#&gt; 3 0.8527095 0.8527095</span></span>
 <span><span class="co">#&gt; 4 0.4896298 0.6700857</span></span>
 <span><span class="co">#&gt; 5 0.2414186 0.6035466</span></span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">testFeatures</span><span class="op">(</span><span class="va">npls_lowinter</span>, <span class="va">processedLowinter</span>, <span class="fl">1</span>, <span class="st">"Area_delta_R30"</span><span class="op">)</span> <span class="co"># NO flip</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(subject, RFgroup)`</span></span>
 <span><span class="co">#&gt; Joining with `by = join_by(subject, age, gender)`</span></span>
@@ -670,17 +685,51 @@
 <span></span>
 <span><span class="va">a</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20lowinter%20comp%201-1.png" width="700"></p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20lowinter%20comp%201-2.png" width="700"></p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">c</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20lowinter%20comp%201-3.png" width="700"></p>
+<p>Positively loaded microbiota including Fusobacterium nucleatum,
+Prevotella veroralis, Prevotella salivae, Haemophilus haemolyticus /
+influenzae / parainfluenzae, Granulicatella elegans, Selenomonas
+sputigena, Actinomyces gerencseriae, Actinomyces dentalis / orihominis,
+and Atopobium rimae were enriched in high responders and depleted in low
+responders. Conversely, negatively loaded microbiota including
+Leptotrichia hongkongensis, Rothia dentocariosa, Prevotella maculosa,
+Campylobacter gracilis, Prevotella melaninogenica, Veillonella dispar /
+parvula, Kingella oralis, Prevotella nanceiensis, Cardiobacterium
+valvarum, and Actinomyces odontolyticus were enriched in low responders
+and depleted in high responders. The time mode loadings did not reveal
+any clear temporal pattern.</p>
 </div>
 <div class="section level2">
 <h2 id="upper-jaw-lingual-microbiome">Upper jaw lingual microbiome<a class="anchor" aria-label="anchor" href="#upper-jaw-lingual-microbiome"></a>
 </h2>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<p>NPLS was subsequently applied to supervise the decomposition using
+the percentage of sites that were covered in red fluorescent plaque
+(RF%) as dependent variable (y). The model selection procedure revealed
+that one component corresponded to the RMSECV minimum, explaining 7.1%
+of variation in X and 37.3% of variation in y. The commented code below
+performs the procedure, and is not rerun here due to computational
+limitations.</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># CV_upling = NPLStoolbox::ncrossreg(processedUpling$data, Ycnt, maxNumComponents = 10)</span></span>
+<span><span class="co"># a=CV_upling$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
+<span><span class="co"># b=CV_upling$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
+<span><span class="co"># ggarrange(a,b)</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># npls_upling = NPLStoolbox::triPLS1(processedUpling$data, Ycnt, 1)</span></span>
+<span><span class="va">npls_upling</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_upling.RDS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">npls_upling</span><span class="op">$</span><span class="va">varExpX</span></span>
+<span><span class="co">#&gt; [1] 7.050193</span></span>
+<span><span class="va">npls_upling</span><span class="op">$</span><span class="va">varExpY</span></span>
+<span><span class="co">#&gt; [1] 37.33265</span></span></code></pre></div>
+<p>As expected, MLR analysis revealed that the NPLS component captured
+variation exclusively associated with RF%.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">testMetadata</span><span class="op">(</span><span class="va">npls_upling</span>, <span class="fl">1</span>, <span class="va">processedUpling</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             Term   Estimate                                          CI</span></span>
 <span><span class="co">#&gt; 1  plaquepercent  4.0478033 -0.000770578431992336 – 0.00886618505872002</span></span>
@@ -694,7 +743,7 @@
 <span><span class="co">#&gt; 3 9.122167e-05 0.0004561084</span></span>
 <span><span class="co">#&gt; 4 8.555172e-02 0.1616220476</span></span>
 <span><span class="co">#&gt; 5 8.384549e-01 0.8384548793</span></span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">=</span> <span class="va">npls_upling</span></span>
 <span><span class="va">df</span> <span class="op">=</span> <span class="va">processedUpling</span></span>
 <span></span>
@@ -733,17 +782,53 @@
 <span></span>
 <span><span class="va">a</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20upling%20comp%201-1.png" width="700"></p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20upling%20comp%201-2.png" width="700"></p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">c</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20upling%20comp%201-3.png" width="700"></p>
+<p>Positively loaded microbiota including Fusobacterium massiliense,
+Fusobacterium hwasookii / nucleatum / periodonticum, Veillonella
+massiliensis, Prevotella nanceiensis, Porphyromonas pasteri,
+Lachnoanaerobaculum cf., Fusobacterium canifelinum / nucleatum,
+Fusobacterium periodonticum, Prevotella nigrescens, and Capnocytophaga
+sputigena were enriched in high responders and depleted in low
+responders. Conversely, negatively loaded microbiota including Rothia
+dentocariosa, Veillonella atypica / dispar, Veillonella denticariosi /
+parvula, Actinomyces naeslundii / oris / viscosus, Kingella oris,
+Leptotrichia hongkongensis, Veillonella dispar / parvula,
+Corynebacterium durum, Capnocytophaga gingivalis, and Streptococcus
+cristatus / sanguinis were enriched in low responders and depleted in
+high responders. The time mode loadings showed a transient increase in
+inter-subject differences during the intervention period.</p>
 </div>
 <div class="section level2">
 <h2 id="upper-jaw-interproximal-microbiome">Upper jaw interproximal microbiome<a class="anchor" aria-label="anchor" href="#upper-jaw-interproximal-microbiome"></a>
 </h2>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<p>NPLS was subsequently applied to supervise the decomposition using
+the percentage of sites that were covered in red fluorescent plaque
+(RF%) as dependent variable (y). The model selection procedure revealed
+that one component corresponded to an RMSECV minimum, explaining 6.4% of
+variation in X and 34.3% of variation in y. The commented code below
+performs the procedure, and is not rerun here due to computational
+limitations.</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># CV_upinter = NPLStoolbox::ncrossreg(processedUpinter$data, Ycnt, maxNumComponents = 10)</span></span>
+<span><span class="co"># a=CV_upinter$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
+<span><span class="co"># b=CV_upinter$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
+<span><span class="co"># ggarrange(a,b)</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># npls_upinter = NPLStoolbox::triPLS1(processedUpinter$data, Ycnt, 1)</span></span>
+<span><span class="va">npls_upinter</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_upinter.RDS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">npls_upinter</span><span class="op">$</span><span class="va">varExpX</span></span>
+<span><span class="co">#&gt; [1] 6.360512</span></span>
+<span><span class="va">npls_upinter</span><span class="op">$</span><span class="va">varExpY</span></span>
+<span><span class="co">#&gt; [1] 34.30872</span></span></code></pre></div>
+<p>As expected, MLR analysis revealed that the NPLS component captured
+variation exclusively associated with RF%.</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">testMetadata</span><span class="op">(</span><span class="va">npls_upinter</span>, <span class="fl">1</span>, <span class="va">processedUpinter</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             Term  Estimate                                          CI</span></span>
 <span><span class="co">#&gt; 1  plaquepercent  3.339033  -0.00145139242610112 – 0.00812945878601939</span></span>
@@ -757,7 +842,7 @@
 <span><span class="co">#&gt; 3 0.0003277558 0.001638779</span></span>
 <span><span class="co">#&gt; 4 0.0586855593 0.146713898</span></span>
 <span><span class="co">#&gt; 5 0.5990911027 0.599091103</span></span></code></pre></div>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">=</span> <span class="va">npls_upinter</span></span>
 <span><span class="va">df</span> <span class="op">=</span> <span class="va">processedUpinter</span></span>
 <span></span>
@@ -796,17 +881,54 @@
 <span></span>
 <span><span class="va">a</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20upinter%20comp%201-1.png" width="700"></p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20upinter%20comp%201-2.png" width="700"></p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">c</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20upinter%20comp%201-3.png" width="700"></p>
+<p>Positively loaded microbiota including Leptotrichia massiliensis,
+Porphyromonas pasteri, Fusobacterium hwasookii / nucleatum /
+periodonticum, Lachnoanaerobaculum cf., Prevotella nigrescens,
+Selenomonas sputigena, Fusobacterium canifelinum / nucleatum,
+Leptotrichia buccalis, Capnocytophaga sputigena, and Actinomyces
+georgiae / pacaensis were enriched in high responders and depleted in
+low responders. Conversely, negatively loaded microbiota including
+Rothia dentocariosa, Veillonella denticariosi / parvula, Kingella
+oralis, Leptotrichia hongkongensis, Neisseria bacilliformis / lactamica
+/ meningitidis, Veillonella atypica / dispar, Actinomyces naeslundii /
+oris / viscosus, Granulicatella adiacens / para-adiacens, Streptococcus
+cristatus / sanguinis, and Veillonella dispar / parvula were enriched in
+low responders and depleted in high responders. The time mode loadings
+indicated that inter-subject differences increased over time, reaching a
+maximum at day 14.</p>
 </div>
 <div class="section level2">
 <h2 id="salivary-microbiome">Salivary microbiome<a class="anchor" aria-label="anchor" href="#salivary-microbiome"></a>
 </h2>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<p>NPLS was subsequently applied to supervise the decomposition using
+the percentage of sites that were covered in red fluorescent plaque
+(RF%) as dependent variable (y). The model selection procedure revealed
+that one component corresponded to the RMSECV minimum, explaining 5.2%
+of variation in X and 33.2% of variation in y, respectively. The
+commented code below performs the procedure, and is not rerun here due
+to computational limitations.</p>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># CV_saliva = NPLStoolbox::ncrossreg(processedSaliva$data, Ycnt, maxNumComponents = 10)</span></span>
+<span><span class="co"># a=CV_saliva$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
+<span><span class="co"># b=CV_saliva$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
+<span><span class="co"># ggarrange(a,b)</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># npls_saliva = NPLStoolbox::triPLS1(processedSaliva$data, Ycnt, 1)</span></span>
+<span><span class="va">npls_saliva</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_saliva.RDS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">npls_saliva</span><span class="op">$</span><span class="va">varExpX</span></span>
+<span><span class="co">#&gt; [1] 5.179739</span></span>
+<span><span class="va">npls_saliva</span><span class="op">$</span><span class="va">varExpY</span></span>
+<span><span class="co">#&gt; [1] 33.22421</span></span></code></pre></div>
+<p>As expected, MLR analysis revealed that the NPLS component captured
+variation exclusively associated with RF%.</p>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">testMetadata</span><span class="op">(</span><span class="va">npls_saliva</span>, <span class="fl">1</span>, <span class="va">processedSaliva</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             Term  Estimate                                          CI</span></span>
 <span><span class="co">#&gt; 1  plaquepercent  0.517096  -0.00463103466799416 – 0.00566522660467623</span></span>
@@ -820,7 +942,7 @@
 <span><span class="co">#&gt; 3 0.0005792527 0.002896263</span></span>
 <span><span class="co">#&gt; 4 0.1478429972 0.246404995</span></span>
 <span><span class="co">#&gt; 5 0.5727997357 0.715999670</span></span></code></pre></div>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">=</span> <span class="va">npls_saliva</span></span>
 <span><span class="va">df</span> <span class="op">=</span> <span class="va">processedSaliva</span></span>
 <span></span>
@@ -859,17 +981,52 @@
 <span></span>
 <span><span class="va">a</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20saliva%20comp%201-1.png" width="700"></p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20saliva%20comp%201-2.png" width="700"></p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">c</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20saliva%20comp%201-3.png" width="700"></p>
+<p>Positively loaded microbiota including Lachnoanaerobaculum cf.,
+Porphyromonas pasteri, Neisseria meningitidis, Fusobacterium hwasookii /
+nucleatum / periodonticum, Veillonella massiliensis, Capnocytophaga
+sputigena, Peptostreptococcus stomatis, Oribacterium parvum,
+Granulicatella elegans, and Aggregatibacter segnis were enriched in high
+responders and depleted in low responders. Conversely, negatively loaded
+microbiota including Prevotella jejuni / melaninogenica, Kingella
+oralis, Rothia dentocariosa, Leptotrichia hongkongensis, Stomatobaculum
+longum, Actinomyces naeslundii / oris / viscosus, Rothia mucilaginosa,
+Prevotella salivae, Alloprevotella rava, and Prevotella melaninogenica /
+scopos were enriched in low responders and depleted in high responders.
+The time mode loadings showed a brief increase in inter-subject
+differences peaking around day 5, followed by a decline.</p>
 </div>
 <div class="section level2">
 <h2 id="salivary-metabolomics">Salivary metabolomics<a class="anchor" aria-label="anchor" href="#salivary-metabolomics"></a>
 </h2>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<p>NPLS was subsequently applied to supervise the decomposition using
+the percentage of sites that were covered in red fluorescent plaque
+(RF%) as dependent variable (y). The model selection procedure revealed
+that one component corresponded to the RMSECV minimum, explaining 8.7%
+of variation in X and 25.7% of variation in y. The commented code below
+performs the procedure, and is not rerun here due to computational
+limitations.</p>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># CV_metab = NPLStoolbox::ncrossreg(processedMetabolomics$data, Ymetab_cnt, maxNumComponents = 10)</span></span>
+<span><span class="co"># a=CV_metab$varExp %&gt;% pivot_longer(-numComponents) %&gt;% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")</span></span>
+<span><span class="co"># b=CV_metab$RMSE %&gt;% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")</span></span>
+<span><span class="co"># ggarrange(a,b)</span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># npls_metab = NPLStoolbox::triPLS1(processedMetabolomics$data, Ymetab_cnt, 1)</span></span>
+<span><span class="va">npls_metab</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"./TIFN2/NPLS_metab.RDS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">npls_metab</span><span class="op">$</span><span class="va">varExpX</span></span>
+<span><span class="co">#&gt; [1] 8.655991</span></span>
+<span><span class="va">npls_metab</span><span class="op">$</span><span class="va">varExpY</span></span>
+<span><span class="co">#&gt; [1] 25.66813</span></span></code></pre></div>
+<p>As expected, MLR analysis revealed that the NPLS component captured
+variation exclusively associated with RF%.</p>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">testMetadata</span><span class="op">(</span><span class="va">npls_metab</span>, <span class="fl">1</span>, <span class="va">processedMetabolomics</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             Term   Estimate                                         CI</span></span>
 <span><span class="co">#&gt; 1  plaquepercent   4.293501 -0.00105841095712955 – 0.00964541325008825</span></span>
@@ -883,7 +1040,7 @@
 <span><span class="co">#&gt; 3 0.008879154 0.04439577</span></span>
 <span><span class="co">#&gt; 4 0.542189172 0.54218917</span></span>
 <span><span class="co">#&gt; 5 0.170255737 0.23196582</span></span></code></pre></div>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">=</span> <span class="va">npls_metab</span></span>
 <span><span class="va">df</span> <span class="op">=</span> <span class="va">processedMetabolomics</span></span>
 <span></span>
@@ -943,12 +1100,21 @@
 <span></span>
 <span><span class="va">a</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20saliva%20metab%20comp%201-1.png" width="700"></p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20saliva%20metab%20comp%201-2.png" width="700"></p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">c</span></span></code></pre></div>
 <p><img src="TIFN2_files/figure-html/plot%20npls%20saliva%20metab%20comp%201-3.png" width="700"></p>
+<p>Higher RF% was associated with elevated levels of amino acids and
+dipeptides, including valine, isoleucine, and leucylglycine. In
+addition, increased concentrations of arachidonate, and polyamines
+including 1,3-diaminopropane, were observed in this group. Conversely,
+individuals with lower RF% exhibited higher levels of carbohydrates
+(e.g., maltose, glucose), energy-related compounds (e.g., creatine,
+guanidinoacetate), and vitamin-related metabolites such as nicotinamide,
+dexpanthenol, and alpha-tocopherol acetate. The time mode loadings
+indicated that inter-subject differences were maximal at day 14.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
