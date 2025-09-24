@@ -1,6 +1,12 @@
 ---
-title: "TIFN2"
+title: "TIFN2: Red fluorescent plaque development in gingivitis"
+output: html_document
+date: "2025-08-31"
 ---
+
+# Introduction
+
+This article presents the NPLS results of the TIFN2 dataset discussed in Chapter 4 of my dissertation.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -155,87 +161,26 @@ Ymetab = processedMetabolomics$mode1 %>% left_join(vanderPloeg2024$red_fluoresce
 Ymetab_cnt = Ymetab - mean(Ymetab)
 ```
 
-```{r prepare CVs}
+# Tongue microbiome
+
+NPLS was subsequently applied to supervise the decomposition using the percentage of sites that were covered in red fluorescent plaque (RF%) as dependent variable (y). The model selection procedure revealed that three components were appropriate due to the observation of an elbow in the variance explained for X, explaining 31.3% of variation in X and 71.7% of variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r tongue model selection}
 # CV_tongue = NPLStoolbox::ncrossreg(processedTongue$data, Ycnt, maxNumComponents = 10)
-# CV_lowling = NPLStoolbox::ncrossreg(processedLowling$data, Ycnt, maxNumComponents = 10)
-# CV_lowinter = NPLStoolbox::ncrossreg(processedLowinter$data, Ycnt, maxNumComponents = 10)
-# CV_upling = NPLStoolbox::ncrossreg(processedUpling$data, Ycnt, maxNumComponents = 10)
-# CV_upinter = NPLStoolbox::ncrossreg(processedUpinter$data, Ycnt, maxNumComponents = 10)
-# CV_saliva = NPLStoolbox::ncrossreg(processedSaliva$data, Ycnt, maxNumComponents = 10)
-# CV_metab = NPLStoolbox::ncrossreg(processedMetabolomics$data, Ymetab_cnt, maxNumComponents = 10)
-# 
-# saveRDS(CV_tongue, "./NPLS_CV_tongue.RDS")
-# saveRDS(CV_lowling, "./NPLS_CV_lowling.RDS")
-# saveRDS(CV_lowinter, "./NPLS_CV_lowinter.RDS")
-# saveRDS(CV_upling, "./NPLS_CV_upling.RDS")
-# saveRDS(CV_upinter, "./NPLS_CV_upinter.RDS")
-# saveRDS(CV_saliva, "./NPLS_CV_saliva.RDS")
-# saveRDS(CV_metab, "./NPLS_CV_metab.RDS")
-# 
-# CV_tongue = readRDS("./NPLS_CV_tongue.RDS")
-# CV_lowling = readRDS("./NPLS_CV_lowling.RDS")
-# CV_lowinter = readRDS("./NPLS_CV_lowinter.RDS")
-# CV_upling = readRDS("./NPLS_CV_upling.RDS")
-# CV_upinter = readRDS("./NPLS_CV_upinter.RDS")
-# CV_saliva = readRDS("./NPLS_CV_saliva.RDS")
-# CV_metab = readRDS("./NPLS_CV_metab.RDS")
-# 
 # a=CV_tongue$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
 # b=CV_tongue$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
 # ggarrange(a,b)
-# 
-# a=CV_lowling$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_lowling$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b)
-# 
-# a=CV_lowinter$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_lowinter$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b)
-# 
-# a=CV_upling$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_upling$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b)
-# 
-# a=CV_upinter$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_upinter$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b)
-# 
-# a=CV_saliva$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_saliva$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b)
-# 
-# a=CV_metab$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_metab$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b)
 ```
 
-```{r npls models}
+```{r tongue load model}
 # npls_tongue = NPLStoolbox::triPLS1(processedTongue$data, Ycnt, 3)
-# npls_lowling = NPLStoolbox::triPLS1(processedLowling$data, Ycnt, 2)
-# npls_lowinter = NPLStoolbox::triPLS1(processedLowinter$data, Ycnt, 3)
-# npls_upling = NPLStoolbox::triPLS1(processedUpling$data, Ycnt, 1)
-# npls_upinter = NPLStoolbox::triPLS1(processedUpinter$data, Ycnt, 1)
-# npls_saliva = NPLStoolbox::triPLS1(processedSaliva$data, Ycnt, 1)
-# npls_metab = NPLStoolbox::triPLS1(processedMetabolomics$data, Ymetab_cnt, 1)
-# 
-# saveRDS(npls_tongue, "./NPLS_tongue.RDS")
-# saveRDS(npls_lowling, "./NPLS_lowling.RDS")
-# saveRDS(npls_lowinter, "./NPLS_lowinter.RDS")
-# saveRDS(npls_upling, "./NPLS_upling.RDS")
-# saveRDS(npls_upinter, "./NPLS_upinter.RDS")
-# saveRDS(npls_saliva, "./NPLS_saliva.RDS")
-# saveRDS(npls_metab, "./NPLS_metab.RDS")
-
 npls_tongue = readRDS("./TIFN2/NPLS_tongue.RDS")
-npls_lowling = readRDS("./TIFN2/NPLS_lowling.RDS")
-npls_lowinter = readRDS("./TIFN2/NPLS_lowinter.RDS")
-npls_upling = readRDS("./TIFN2/NPLS_upling.RDS")
-npls_upinter = readRDS("./TIFN2/NPLS_upinter.RDS")
-npls_saliva = readRDS("./TIFN2/NPLS_saliva.RDS")
-npls_metab = readRDS("./TIFN2/NPLS_metab.RDS")
+
+npls_tongue$varExpX
+npls_tongue$varExpY
 ```
 
-# Tongue microbiome
+As expected, the first NPLS component captured variation exclusively associated with RF%, while the second component captured variation exclusively associated with subject age, and the third component captured variation associated with plaque% and subject age.
 
 ```{r tongue metadata test}
 testMetadata(npls_tongue, 1, processedTongue)
@@ -337,7 +282,28 @@ b
 c
 ```
 
+Positively loaded microbiota including Peptostreptococcus stomatis, Veillonella massiliensis, Porphyromonas pasteri, Lachnoanaerobaculum cf., Oribacterium parvum, Fusobacterium periodonticum, Aggregatibacter segnis, Granulicatella elegans, Capnocytophaga leadbetteri, and Veillonella parvula / rogosae / tobetsuensis were enriched in high responders and depleted in low responders. Conversely, negatively loaded microbiota including Prevotella jejuni / melaninogenica, Rothia dentocariosa, Streptococcus cristatus / sinensis, Veillonella atypica / dispar, Prevotella melaninogenica / scopos, Stomatobaculum longum, Rothia mucilaginosa, Actinomyces odontolyticus, Prevotella salivae, and Prevotella veroralis were enriched in low responders and depleted in high responders. The time mode loadings of the component indicated that inter-subject differences due to RF% were relatively constant, but transiently decreased during the intervention.
+
 # Lower jaw lingual microbiome
+
+NPLS was subsequently applied to supervise the decomposition using the percentage of sites that were covered in red fluorescent plaque (RF%) as the dependent variable (y). The model selection procedure revealed that two components corresponded to the RMSECV minimum, explaining 13.2% of variation in X and 73.9% of variation in y, respectively. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r lowling model selection}
+# CV_lowling = NPLStoolbox::ncrossreg(processedLowling$data, Ycnt, maxNumComponents = 10)
+# a=CV_lowling$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_lowling$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b)
+```
+
+```{r lowling load model}
+# npls_lowling = NPLStoolbox::triPLS1(processedLowling$data, Ycnt, 2)
+npls_lowling = readRDS("./TIFN2/NPLS_lowling.RDS")
+
+npls_lowling$varExpX
+npls_lowling$varExpY
+```
+
+As expected, the first NPLS component captured variation exclusively associated with RF%, while the second component captured variation exclusively associated with subject gender.
 
 ```{r lowling metadata test}
 testMetadata(npls_lowling, 1, processedLowling)
@@ -408,6 +374,25 @@ c
 
 # Lower jaw interproximal microbiome
 
+NPLS was subsequently applied to supervise the decomposition using the percentage of sites that were covered in red fluorescent plaque (RF%) as dependent variable (y). The model selection procedure revealed that three components were appropriate due to a marked improvement in RMSECV, explaining 9.8% of variation in X and 94.0% of variation in y, respectively. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r lowinter model selection}
+# CV_lowinter = NPLStoolbox::ncrossreg(processedLowinter$data, Ycnt, maxNumComponents = 10)
+# a=CV_lowinter$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_lowinter$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b)
+```
+
+```{r lowinter load model}
+# npls_lowinter = NPLStoolbox::triPLS1(processedLowinter$data, Ycnt, 3)
+npls_lowinter = readRDS("./TIFN2/NPLS_lowinter.RDS")
+
+npls_lowinter$varExpX
+npls_lowinter$varExpY
+```
+
+As expected, the first NPLS component captured variation exclusively associated with RF%, while the second and third components were not interpretable.
+
 ```{r lowinter metadata test}
 testMetadata(npls_lowinter, 1, processedLowinter)
 testMetadata(npls_lowinter, 2, processedLowinter)
@@ -445,7 +430,28 @@ b
 c
 ```
 
+Positively loaded microbiota including Fusobacterium nucleatum, Prevotella veroralis, Prevotella salivae, Haemophilus haemolyticus / influenzae / parainfluenzae, Granulicatella elegans, Selenomonas sputigena, Actinomyces gerencseriae, Actinomyces dentalis / orihominis, and Atopobium rimae were enriched in high responders and depleted in low responders. Conversely, negatively loaded microbiota including Leptotrichia hongkongensis, Rothia dentocariosa, Prevotella maculosa, Campylobacter gracilis, Prevotella melaninogenica, Veillonella dispar / parvula, Kingella oralis, Prevotella nanceiensis, Cardiobacterium valvarum, and Actinomyces odontolyticus were enriched in low responders and depleted in high responders. The time mode loadings did not reveal any clear temporal pattern.
+
 # Upper jaw lingual microbiome
+
+NPLS was subsequently applied to supervise the decomposition using the percentage of sites that were covered in red fluorescent plaque (RF%) as dependent variable (y). The model selection procedure revealed that one component corresponded to the RMSECV minimum, explaining 7.1% of variation in X and 37.3% of variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r upling model selection}
+# CV_upling = NPLStoolbox::ncrossreg(processedUpling$data, Ycnt, maxNumComponents = 10)
+# a=CV_upling$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_upling$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b)
+```
+
+```{r upling load model}
+# npls_upling = NPLStoolbox::triPLS1(processedUpling$data, Ycnt, 1)
+npls_upling = readRDS("./TIFN2/NPLS_upling.RDS")
+
+npls_upling$varExpX
+npls_upling$varExpY
+```
+
+As expected, MLR analysis revealed that the NPLS component captured variation exclusively associated with RF%.
 
 ```{r upling metadata test}
 testMetadata(npls_upling, 1, processedUpling)
@@ -485,7 +491,28 @@ b
 c
 ```
 
+Positively loaded microbiota including Fusobacterium massiliense, Fusobacterium hwasookii / nucleatum / periodonticum, Veillonella massiliensis, Prevotella nanceiensis, Porphyromonas pasteri, Lachnoanaerobaculum cf., Fusobacterium canifelinum / nucleatum, Fusobacterium periodonticum, Prevotella nigrescens, and Capnocytophaga sputigena were enriched in high responders and depleted in low responders. Conversely, negatively loaded microbiota including Rothia dentocariosa, Veillonella atypica / dispar, Veillonella denticariosi / parvula, Actinomyces naeslundii / oris / viscosus, Kingella oris, Leptotrichia hongkongensis, Veillonella dispar / parvula, Corynebacterium durum, Capnocytophaga gingivalis, and Streptococcus cristatus / sanguinis were enriched in low responders and depleted in high responders. The time mode loadings showed a transient increase in inter-subject differences during the intervention period.
+
 # Upper jaw interproximal microbiome
+
+NPLS was subsequently applied to supervise the decomposition using the percentage of sites that were covered in red fluorescent plaque (RF%) as dependent variable (y). The model selection procedure revealed that one component corresponded to an RMSECV minimum, explaining 6.4% of variation in X and 34.3% of variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r upinter model selection}
+# CV_upinter = NPLStoolbox::ncrossreg(processedUpinter$data, Ycnt, maxNumComponents = 10)
+# a=CV_upinter$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_upinter$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b)
+```
+
+```{r upinter load model}
+# npls_upinter = NPLStoolbox::triPLS1(processedUpinter$data, Ycnt, 1)
+npls_upinter = readRDS("./TIFN2/NPLS_upinter.RDS")
+
+npls_upinter$varExpX
+npls_upinter$varExpY
+```
+
+As expected, MLR analysis revealed that the NPLS component captured variation exclusively associated with RF%.
 
 ```{r upinter metadata test}
 testMetadata(npls_upinter, 1, processedUpinter)
@@ -525,7 +552,28 @@ b
 c
 ```
 
+Positively loaded microbiota including Leptotrichia massiliensis, Porphyromonas pasteri, Fusobacterium hwasookii / nucleatum / periodonticum, Lachnoanaerobaculum cf., Prevotella nigrescens, Selenomonas sputigena, Fusobacterium canifelinum / nucleatum, Leptotrichia buccalis, Capnocytophaga sputigena, and Actinomyces georgiae / pacaensis were enriched in high responders and depleted in low responders. Conversely, negatively loaded microbiota including Rothia dentocariosa, Veillonella denticariosi / parvula, Kingella oralis, Leptotrichia hongkongensis, Neisseria bacilliformis / lactamica / meningitidis, Veillonella atypica / dispar, Actinomyces naeslundii / oris / viscosus, Granulicatella adiacens / para-adiacens, Streptococcus cristatus / sanguinis, and Veillonella dispar / parvula were enriched in low responders and depleted in high responders. The time mode loadings indicated that inter-subject differences increased over time, reaching a maximum at day 14.
+
 # Salivary microbiome
+
+NPLS was subsequently applied to supervise the decomposition using the percentage of sites that were covered in red fluorescent plaque (RF%) as dependent variable (y). The model selection procedure revealed that one component corresponded to the RMSECV minimum, explaining 5.2% of variation in X and 33.2% of variation in y, respectively. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r saliva model selection}
+# CV_saliva = NPLStoolbox::ncrossreg(processedSaliva$data, Ycnt, maxNumComponents = 10)
+# a=CV_saliva$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_saliva$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b)
+```
+
+```{r saliva load model}
+# npls_saliva = NPLStoolbox::triPLS1(processedSaliva$data, Ycnt, 1)
+npls_saliva = readRDS("./TIFN2/NPLS_saliva.RDS")
+
+npls_saliva$varExpX
+npls_saliva$varExpY
+```
+
+As expected, MLR analysis revealed that the NPLS component captured variation exclusively associated with RF%.
 
 ```{r saliva metadata test}
 testMetadata(npls_saliva, 1, processedSaliva)
@@ -565,7 +613,28 @@ b
 c
 ```
 
+Positively loaded microbiota including Lachnoanaerobaculum cf., Porphyromonas pasteri, Neisseria meningitidis, Fusobacterium hwasookii / nucleatum / periodonticum, Veillonella massiliensis, Capnocytophaga sputigena, Peptostreptococcus stomatis, Oribacterium parvum, Granulicatella elegans, and Aggregatibacter segnis were enriched in high responders and depleted in low responders. Conversely, negatively loaded microbiota including Prevotella jejuni / melaninogenica, Kingella oralis, Rothia dentocariosa, Leptotrichia hongkongensis, Stomatobaculum longum, Actinomyces naeslundii / oris / viscosus, Rothia mucilaginosa, Prevotella salivae, Alloprevotella rava, and Prevotella melaninogenica / scopos were enriched in low responders and depleted in high responders. The time mode loadings showed a brief increase in inter-subject differences peaking around day 5, followed by a decline.
+
 # Salivary metabolomics
+
+NPLS was subsequently applied to supervise the decomposition using the percentage of sites that were covered in red fluorescent plaque (RF%) as dependent variable (y). The model selection procedure revealed that one component corresponded to the RMSECV minimum, explaining 8.7% of variation in X and 25.7% of variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r metabolomics model selection}
+# CV_metab = NPLStoolbox::ncrossreg(processedMetabolomics$data, Ymetab_cnt, maxNumComponents = 10)
+# a=CV_metab$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_metab$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b)
+```
+
+```{r metabolomics load model}
+# npls_metab = NPLStoolbox::triPLS1(processedMetabolomics$data, Ymetab_cnt, 1)
+npls_metab = readRDS("./TIFN2/NPLS_metab.RDS")
+
+npls_metab$varExpX
+npls_metab$varExpY
+```
+
+As expected, MLR analysis revealed that the NPLS component captured variation exclusively associated with RF%.
 
 ```{r metabolomics metadata test}
 testMetadata(npls_metab, 1, processedMetabolomics)
@@ -625,3 +694,5 @@ a
 b
 c
 ```
+
+Higher RF% was associated with elevated levels of amino acids and dipeptides, including valine, isoleucine, and leucylglycine. In addition, increased concentrations of arachidonate, and polyamines including 1,3-diaminopropane, were observed in this group. Conversely, individuals with lower RF% exhibited higher levels of carbohydrates (e.g., maltose, glucose), energy-related compounds (e.g., creatine, guanidinoacetate), and vitamin-related metabolites such as nicotinamide, dexpanthenol, and alpha-tocopherol acetate. The time mode loadings indicated that inter-subject differences were maximal at day 14.

@@ -1,6 +1,12 @@
 ---
-title: "GOHTRANS"
+title: "GOHTRANS: gender-affirming hormone therapy"
+output: html_document
+date: "2025-08-31"
 ---
+
+# Introduction
+
+This article presents the NPLS results of the GOHTRANS dataset discussed in Chapter 6 of my dissertation.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -209,59 +215,26 @@ Ycnt = Y - mean(Y)
 Ynorm_biochem = Ycnt / norm(Ycnt, "2")
 ```
 
-# Model selection
+# Tongue microbiome
 
-```{r prepare CVs}
+NPLS was next applied to supervise the decomposition using the difference in free testosterone between baseline and month three of GAHT as the dependent variable (y). The model selection procedure revealed that a one-component NPLS model corresponded to the RMSECV minimum, explaining 5.7% of the variation in X, and 29.2% of the variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r tongue model selection}
 # CV_tongue = NPLStoolbox::ncrossreg(processedTongue$data, Ynorm_tongue, maxNumComponents = 10)
-# CV_saliva = NPLStoolbox::ncrossreg(processedSaliva$data, Ynorm_saliva, maxNumComponents = 10)
-# CV_cyto = NPLStoolbox::ncrossreg(processedCytokines$data, Ynorm_cytokine, maxNumComponents = 10)
-# CV_bio = NPLStoolbox::ncrossreg(processedBiochemistry$data, Ynorm_biochem, maxNumComponents=10)
-# 
-# saveRDS(CV_tongue, "./NPLS_CV_tongue_deltaT.RDS")
-# saveRDS(CV_saliva, "./NPLS_CV_saliva_deltaT.RDS")
-# saveRDS(CV_cyto, "./NPLS_CV_cyto_deltaT.RDS")
-# saveRDS(CV_bio, "./NPLS_CV_bio_deltaT.RDS")
-# 
-# CV_tongue = readRDS("./NPLS_CV_tongue_deltaT.RDS")
-# CV_saliva = readRDS("./NPLS_CV_saliva_deltaT.RDS")
-# CV_cyto = readRDS("./NPLS_CV_cyto_deltaT.RDS")
-# CV_bio = readRDS("./NPLS_CV_bio_deltaT.RDS")
-# 
 # a=CV_tongue$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
 # b=CV_tongue$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
 # ggarrange(a,b) # 1
-# 
-# a=CV_saliva$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_saliva$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b) # 1
-# 
-# a=CV_cyto$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_cyto$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b) # 1
-# 
-# a=CV_bio$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_bio$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b) # 1
 ```
 
-```{r npls models}
+```{r tongue load model}
 # npls_tongue = NPLStoolbox::triPLS1(processedTongue$data, Ynorm_tongue, 1)
-# npls_saliva = NPLStoolbox::triPLS1(processedSaliva$data, Ynorm_saliva, 1)
-# npls_cyto = NPLStoolbox::triPLS1(processedCytokines$data, Ynorm_cytokine, 1)
-# npls_bio = NPLStoolbox::triPLS1(processedBiochemistry$data, Ynorm_biochem, 1)
-# 
-# saveRDS(npls_tongue, "./NPLS_tongue_deltaT.RDS")
-# saveRDS(npls_saliva, "./NPLS_saliva_deltaT.RDS")
-# saveRDS(npls_cyto, "./NPLS_cyto_deltaT.RDS")
-# saveRDS(npls_bio, "./NPLS_bio_deltaT.RDS")
-
 npls_tongue = readRDS("./GOHTRANS/NPLS_tongue_deltaT.RDS")
-npls_saliva = readRDS("./GOHTRANS/NPLS_saliva_deltaT.RDS")
-npls_cyto = readRDS("./GOHTRANS/NPLS_cyto_deltaT.RDS")
-npls_bio = readRDS("./GOHTRANS/NPLS_bio_deltaT.RDS")
+
+npls_tongue$varExpX
+npls_tongue$varExpY
 ```
 
-# Tongue microbiome
+As expected, MLR analysis revealed that the model captured variation exclusively associated with gender identity.
 
 ```{r tongue check metadata}
 testMetadata(npls_tongue, 1, processedTongue)
@@ -335,7 +308,28 @@ b
 c
 ```
 
+Positively loaded microbiota including Streptococcus salivarius / vestibularis, Rothia dentocariosa, Prevotella nigrescens, Streptococcus sp., Actinomyces odontolyticus, Streptococcus australis / parasanguinis, Prevotella pallens, Veillonella sp., and Streptococcus dentisani / infantis / mitis / oralis were enriched in transfeminine participants and depleted in transmasculine participants. Conversely, negatively loaded microbiota including Leptotrichia spp., Oribacterium parvum, Neisseria flavescens / subflava, Peptostreptococcaceae sp., Lachnoanaerobaculum umeaense, and Fusobacterium periodonticum were enriched in transmasculine participants and depleted in transfeminine participants. The time mode loadings indicate that inter-subject differences due to GAHT increased over time, and reached a maximum at month six.
+
 # Salivary microbiome
+
+NPLS was next applied to supervise the decomposition using the difference in free testosterone between baseline and month three of GAHT as the dependent variable (y). The model selection procedure revealed that a one-component NPLS model corresponded to the RMSECV minimum, explaining 4.8% of the variation in X, and 33.1% of the variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r saliva model selection}
+# CV_saliva = NPLStoolbox::ncrossreg(processedSaliva$data, Ynorm_saliva, maxNumComponents = 10)
+# a=CV_saliva$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_saliva$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b) # 1
+```
+
+```{r saliva load model}
+# npls_saliva = NPLStoolbox::triPLS1(processedSaliva$data, Ynorm_saliva, 1)
+npls_saliva = readRDS("./GOHTRANS/NPLS_saliva_deltaT.RDS")
+
+npls_saliva$varExpX
+npls_saliva$varExpY
+```
+
+As expected, MLR analysis revealed that the model captured variation exclusively associated with gender identity.
 
 ```{r saliva check metadata}
 testMetadata(npls_saliva, 1, processedSaliva)
@@ -407,13 +401,54 @@ a
 b
 c
 ```
+
+Positively loaded microbiota including Prevotella oris, Streptococcus australis / parasanguinis, Veillonella sp., Kingella sp., Prevotella sp., Stomatobaculum sp., Streptococcus salivarius / vestibularis, Oribacterium asaccharolyticum, and Rothia dentocariosa were enriched in transfeminine participants and depleted in transmasculine participants. Conversely, negatively loaded microbiota including Actinomyces sp., Veillonella spp., Neisseria flava / mucosa / pharyngis / sicca, Neisseria flavescens / subflava, Haemophilus parainfluenzae, Leptotrichia sp., Selenomonas sp., and Lachnoanaerobaculum sp. were enriched in transmasculine participants and depleted in transfeminine participants. The time mode loadings indicate that inter-subject differences due to GAHT reach a maximum at month six, before dropping sharply.
+
 # Salivary cytokines
+
+NPLS was next applied to supervise the decomposition using the difference in free testosterone between baseline and month three of GAHT as the dependent variable (y). The model selection procedure revealed that a two-component NPLS model corresponded to the RMSECV minimum, but was biologically uninterpretable. Therefore a one-component NPLS model was selected, explaining 48.9% of the variation in X, and 34.7% of the variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r cytokines model selection}
+# CV_cyto = NPLStoolbox::ncrossreg(processedCytokines$data, Ynorm_cytokine, maxNumComponents = 10)
+# a=CV_cyto$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_cyto$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b) # 1
+```
+
+```{r cytokines load model}
+# npls_cyto = NPLStoolbox::triPLS1(processedCytokines$data, Ynorm_cytokine, 1)
+npls_cyto = readRDS("./GOHTRANS/NPLS_cyto_deltaT.RDS")
+
+npls_cyto$varExpX
+npls_cyto$varExpY
+```
+
+Unexpectedly, MLR analysis revealed that the model captured uninterpretable variation.
 
 ```{r cytokines check metadata}
 testMetadata(npls_cyto, 1, processedCytokines)
 ```
 
 # Salivary biochemistry
+
+NPLS was next applied to the salivary biochemistry data block to supervise the decomposition using the difference in free testosterone between baseline and month three of GAHT as the dependent variable (y). The model selection procedure revealed that a two-component NPLS model corresponded to the RMSECV minimum, but was biologically uninterpretable. Therefore, a one-component NPLS model was selected, explaining 16.4% of the variation in X, and 25.3% of the variation in y.
+
+```{r biochemistry model selection}
+# CV_bio = NPLStoolbox::ncrossreg(processedBiochemistry$data, Ynorm_biochem, maxNumComponents=10)
+# a=CV_bio$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_bio$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b) # 1
+```
+
+```{r biochemistry load model}
+# npls_bio = NPLStoolbox::triPLS1(processedBiochemistry$data, Ynorm_biochem, 1)
+npls_bio = readRDS("./GOHTRANS/NPLS_bio_deltaT.RDS")
+
+npls_bio$varExpX
+npls_bio$varExpY
+```
+
+As expected, MLR analysis revealed that the model captured variation exclusively associated with gender identity.
 
 ```{r biochemistry check metadata}
 testMetadata(npls_bio, 1, processedBiochemistry)
@@ -459,3 +494,5 @@ a
 b
 c
 ```
+
+Positively loaded features including lysozyme, total protein, amylase, and MUC-5B had higher levels in transfeminine participants and lower levels in transmasculine participants. Conversely, negatively loaded features including pH, S-IgA, and chitinase had higher levels in transmasculine participants and lower levels in transfeminine participants. The time mode loadings indicate that these differences mainly occurred after the six-month mark of GAHT.

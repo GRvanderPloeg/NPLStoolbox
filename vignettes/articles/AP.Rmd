@@ -1,6 +1,12 @@
 ---
-title: "AP"
+title: "AP: pain perception in apical periodontitis"
+output: html_document
+date: "2025-08-31"
 ---
+
+# Introduction
+
+This article presents the NPLS results of the AP dataset discussed in Chapter 7 of my dissertation.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -110,39 +116,27 @@ Ycnt = Y - mean(Y)
 Ynorm_case = Ycnt / norm(Ycnt, "2")
 ```
 
-# Model selection
+# Inflammatory mediators
 
-```{r prepare CVs}
-# CV_cyto_full = NPLStoolbox::ncrossreg(processedCytokines_full$data, Ynorm_full, maxNumComponents = 10)
+NPLS was next applied to the inflammatory mediator data to supervise the decomposition using pain perception as the dependent variable (y). The model selection procedure indicates that a one-component NPLS model corresponded to the RMSECV minimum, explaining 8.6% of the variation in X and 39.6% of the variation in y, respectively. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r model selection}
 # CV_cyto_case = NPLStoolbox::ncrossreg(processedCytokines_case$data, Ynorm_case, maxNumComponents = 10)
-# 
-# saveRDS(CV_cyto_full, "./NPLS_CV_cyto_full.RDS")
-# saveRDS(CV_cyto_case, "./NPLS_CV_cyto_case.RDS")
-# 
-# CV_cyto_full = readRDS("./NPLS_CV_cyto_full.RDS")
-# CV_cyto_case = readRDS("./NPLS_CV_cyto_case.RDS")
-# 
-# a=CV_cyto_full$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_cyto_full$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b) # 3?
 # 
 # a=CV_cyto_case$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
 # b=CV_cyto_case$RMSE %>% ggplot(aes(x=as.factor(numComponents),y=RMSE,group=1)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b) # 3?
+# ggarrange(a,b)
 ```
 
-```{r npls models}
-# npls_cyto_full = NPLStoolbox::triPLS1(processedCytokines_full$data, Ynorm_full, 3)
+```{r load npls model}
 # npls_cyto_case = NPLStoolbox::triPLS1(processedCytokines_case$data, Ynorm_case, 3)
-#
-# saveRDS(npls_cyto_full, "./NPLS_cyto_full.RDS")
-# saveRDS(npls_cyto_case, "./NPLS_cyto_case.RDS")
-
-npls_cyto_full = readRDS("./AP/NPLS_cyto_full.RDS")
 npls_cyto_case = readRDS("./AP/NPLS_cyto_case.RDS")
+
+npls_cyto_case$varExpX
+npls_cyto_case$varExpY
 ```
 
-# Inflammatory mediators
+As expected, MLR analysis revealed that the NPLS component captured variation exclusively associated with pain perception.
 
 ```{r metadata test}
 testMetadata(npls_cyto_case, 1, processedCytokines_case)
@@ -181,3 +175,5 @@ a
 b
 c
 ```
+
+Positively loaded inflammatory mediators, including RANKL, TNF-alpha, MIP-1 alpha, CRP, IL-8, IL-12p70, and IL-17A had higher levels in symptomatic AP and lower levels in asymptomatic AP. Conversely, negatively loaded inflammatory mediators, including OPG, IL-6, IL-10, IFN-gamma, GM-CSF, IL-1 beta, VEGF, and IL-4 had higher levels in asymptomatic AP and lower levels in symptomatic AP. The time mode loadings of the model indicated that inter-subject differences due to pain perception decreased only transiently throughout the time series.

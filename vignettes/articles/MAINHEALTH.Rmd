@@ -1,6 +1,12 @@
 ---
-title: "MAINHEALTH"
+title: "MAINHEALTH: intergenerational obesity transmission"
+output: html_document
+date: "2025-08-31"
 ---
+
+# Introduction
+
+This article presents the NPLS results of the MAINHEALTH dataset discussed in Chapter 5 of my dissertation.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -57,14 +63,6 @@ testMetadata = function(model, comp, metadata){
 ```
 
 ```{r define colours}
-# Old approach
-# Needed colours: BMI groups (3) and phyla levels (6)
-# colours = hue_pal()(9)
-# #show_col(colours)
-# BMI_cols = colours[c(1,4,7)]
-# phylum_cols = colours[-c(1,4,7)]
-
-# Rasmus's suggestion
 colours = RColorBrewer:: brewer.pal(8, "Dark2")
 BMI_cols = c("darkgreen","darkgoldenrod","darkred") #colours[1:3]
 WHZ_cols = c("darkgreen", "darkgoldenrod", "dodgerblue4")
@@ -115,49 +113,26 @@ Ycnt = Y - mean(Y)
 Ynorm_milkMetab = Ycnt / norm(Ycnt, "2")
 ```
 
-## Model selection
+## Infant faecal microbiome
 
-```{r npls cv}
+NPLS was next applied to supervise the decomposition using maternal pre-pregnancy BMI (ppBMI) as dependent variable (y). The model selection procedure revealed that a one-component NPLS model corresponded to the RMSECV minimum, explaining 5.8% of the variation in X, and 12.0% of the variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r faecal bmi model selection}
 # CV_faecal = NPLStoolbox::ncrossreg(processedFaeces$data, Ynorm_faecal)
-# CV_milk = NPLStoolbox::ncrossreg(processedMilk$data, Ynorm_milk)
-# CV_milkMetab = NPLStoolbox::ncrossreg(processedMilkMetab$data, Ynorm_milkMetab)
-# 
-# saveRDS(CV_faecal, "./MAINHEALTH/NPLS_cv_faecal_BMI.RDS")
-# saveRDS(CV_milk, "./MAINHEALTH/NPLS_cv_milk_BMI.RDS")
-# saveRDS(CV_milkMetab, "./MAINHEALTH/NPLS_cv_milkMetab_BMI.RDS")
-# 
-# CV_faecal = readRDS("./NPLS_cv_faecal_BMI.RDS")
-# CV_milk = readRDS("./NPLS_cv_milk_BMI.RDS")
-# CV_milkMetab = readRDS("./NPLS_cv_milkMetab_BMI.RDS")
-# 
 # a=CV_faecal$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
 # b=CV_faecal$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
 # ggarrange(a,b) # 1 comp
-# 
-# a=CV_milk$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_milk$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b) # 1 or 2 comps
-# 
-# a=CV_milkMetab$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_milkMetab$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b) # 1 comp
 ```
 
-```{r make NPLS models of the data}
+```{r faecal bmi load model}
 # NPLS_faecal = NPLStoolbox::triPLS1(processedFaeces$data, Ynorm_faecal, 1)
-# NPLS_milk = NPLStoolbox::triPLS1(processedMilk$data, Ynorm_milk, 1)
-# NPLS_milkMetab = NPLStoolbox::triPLS1(processedMilkMetab$data, Ynorm_milkMetab, 2)
-# 
-# saveRDS(NPLS_faecal, "./NPLS_faecal_BMI.RDS")
-# saveRDS(NPLS_milk, "./NPLS_milk_BMI.RDS")
-# saveRDS(NPLS_milkMetab, "./NPLS_milkMetab_BMI.RDS")
+NPLS_faecal = readRDS("./MAINHEALTH/20250702_NPLS_faecal_bmi.RDS")
 
-NPLS_faecal = readRDS("./MAINHEALTH/20250702_NPLS_faecal_bmi.RDS") # copied from paper (model is the same as above)
-NPLS_milk = readRDS("./MAINHEALTH/20250702_NPLS_milk_bmi.RDS")
-NPLS_milkMetab = readRDS("./MAINHEALTH/20250702_NPLS_milkMetab_bmi.RDS")
+NPLS_faecal$varExpX
+NPLS_faecal$varExpY
 ```
 
-## Infant faecal microbiome
+As expected, MLR analysis revealed that the model captured variation exclusively associated with maternal ppBMI.
 
 ```{r faecal bmi check metadata}
 testMetadata(NPLS_faecal, 1, processedFaeces)
@@ -225,7 +200,28 @@ b
 c
 ```
 
+Positively loaded microbiota including Bifidobacterium breve, Bifidobacterium bifidum, Enterococcus sp., Escherichia coli, Clostridium} sp., and Staphylococcus epidermidis were enriched in infants of high ppBMI mothers and depleted in infants of low ppBMI mothers. Conversely, negatively loaded microbiota including Libanicoccus, Streptococcus, Actinomyces, and Klebsiella sp., as well as Citrobacter freundii, Rothia mucilaginosa, Enterococcus faecalis, Bifidobacterium adolescentis, and Parabacteroides distasonis were enriched in infants of low ppBMI mothers and depleted in infants of high ppBMI mothers. The time mode loadings indicate that ppBMI-associated inter-subject differences peaked at day 60. 
+
 # HM microbiome
+
+NPLS was next applied to supervise the decomposition using maternal pre-pregnancy BMI (ppBMI) as dependent variable (y). The model selection procedure revealed that a one-component model corresponded to the RMSECV minimum, explaining 5.4% of the variation in X, and 11.2% of the variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r hm microbiome bmi model selection}
+# CV_milk = NPLStoolbox::ncrossreg(processedMilk$data, Ynorm_milk)
+# a=CV_milk$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_milk$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b) # 1 or 2 comps
+```
+
+```{r hm microbiome bmi load model}
+# NPLS_milk = NPLStoolbox::triPLS1(processedMilk$data, Ynorm_milk, 1)
+NPLS_milk = readRDS("./MAINHEALTH/20250702_NPLS_milk_bmi.RDS")
+
+NPLS_milk$varExpX
+NPLS_milk$varExpY
+```
+
+As expected, MLR analysis revealed that the model captured variation exclusively associated with maternal ppBMI.
 
 ```{r hm microbiome bmi check metadata}
 testMetadata(NPLS_milk, 1, processedMilk)
@@ -293,7 +289,28 @@ b
 c
 ```
 
+Positively loaded microbiota including Gemella, Streptococcus and Staphylococcus spp. were enriched in high ppBMI mothers and depleted in low ppBMI mothers. Conversely, negatively loaded microbiota including Ligilactobacillus murinus, Clostridium sensu stricto spp., Cutibacterium acnes, Terrisporobacter sp., Lactobacillus gasseri, and Stenotrophomonas maltophilia were enriched in low ppBMI mothers and depleted in high ppBMI mothers. The time mode loadings indicated that inter-subject differences due to maternal ppBMI were largest at day 0 and declined over time. 
+
 # HM metabolome
+
+NPLS was next applied to supervise the decomposition using maternal pre-pregnancy BMI (ppBMI) as dependent variable (y). While the model selection procedure revealed that a two-component NPLS model corresponded to the RMSECV minimum, we found that the extra component did not help in the prediction of y, nor was it biologically interpretable. Hence, a one-component NPLS model was fitted, explaining 3.1% of the variation in X, and 31.0% of the variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r hm metabolome bmi model selection}
+# CV_milkMetab = NPLStoolbox::ncrossreg(processedMilkMetab$data, Ynorm_milkMetab)
+# a=CV_milkMetab$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_milkMetab$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b) # 1 comp
+```
+
+```{r hm metabolome bmi load model}
+# NPLS_milkMetab = NPLStoolbox::triPLS1(processedMilkMetab$data, Ynorm_milkMetab, 2)
+NPLS_milkMetab = readRDS("./MAINHEALTH/20250702_NPLS_milkMetab_bmi.RDS")
+
+NPLS_milkMetab$varExpX
+NPLS_milkMetab$varExpY
+```
+
+However, MLR analysis revealed that the model captured variation associated with a mixture of maternal ppBMI, maternal secretor status, and infant growth at 6 months.
 
 ```{r hm metabolome bmi check metadata}
 testMetadata(NPLS_milkMetab, 1, processedMilkMetab)
@@ -403,49 +420,26 @@ Ycnt = Y - mean(Y)
 Ynorm_milkMetab = Ycnt / norm(Ycnt, "2")
 ```
 
-## Model selection
+## Infant faecal microbiome
 
-```{r npls cv whz}
+Subsequently, NPLS was applied to supervise the decomposition using the infant growth weight-for-height at six months (WHZ) as dependent variable (y). The model selection procedure revealed that a one-component NPLS model corresponded to the RMSECV minimum, explaining 2.6% of the variation in X, and 11.2% of the variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r faecal whz model selection}
 # CV_faecal = NPLStoolbox::ncrossreg(processedFaeces$data, Ynorm_faecal)
-# CV_milk = NPLStoolbox::ncrossreg(processedMilk$data, Ynorm_milk)
-# CV_milkMetab = NPLStoolbox::ncrossreg(processedMilkMetab$data, Ynorm_milkMetab)
-# 
-# saveRDS(CV_faecal, "./MAINHEALTH/NPLS_cv_faecal_BMI.RDS")
-# saveRDS(CV_milk, "./MAINHEALTH/NPLS_cv_milk_BMI.RDS")
-# saveRDS(CV_milkMetab, "./MAINHEALTH/NPLS_cv_milkMetab_BMI.RDS")
-# 
-# CV_faecal = readRDS("./NPLS_cv_faecal_BMI.RDS")
-# CV_milk = readRDS("./NPLS_cv_milk_BMI.RDS")
-# CV_milkMetab = readRDS("./NPLS_cv_milkMetab_BMI.RDS")
-# 
 # a=CV_faecal$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
 # b=CV_faecal$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
 # ggarrange(a,b) # 1 comp
-# 
-# a=CV_milk$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_milk$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b) # 1 or 2 comps
-# 
-# a=CV_milkMetab$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
-# b=CV_milkMetab$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
-# ggarrange(a,b) # 1 comp
 ```
 
-```{r make NPLS models of the data whz}
+```{r faecal whz load model}
 # NPLS_faecal = NPLStoolbox::triPLS1(processedFaeces$data, Ynorm_faecal, 1)
-# NPLS_milk = NPLStoolbox::triPLS1(processedMilk$data, Ynorm_milk, 1)
-# NPLS_milkMetab = NPLStoolbox::triPLS1(processedMilkMetab$data, Ynorm_milkMetab, 2)
-# 
-# saveRDS(NPLS_faecal, "./NPLS_faecal_BMI.RDS")
-# saveRDS(NPLS_milk, "./NPLS_milk_BMI.RDS")
-# saveRDS(NPLS_milkMetab, "./NPLS_milkMetab_BMI.RDS")
-
 NPLS_faecal = readRDS("./MAINHEALTH/20250702_NPLS_faecal_whz.RDS")
-NPLS_milk = readRDS("./MAINHEALTH/20250702_NPLS_milk_whz.RDS")
-NPLS_milkMetab = readRDS("./MAINHEALTH/20250702_NPLS_milkMetab_whz.RDS")
+
+NPLS_faecal$varExpX
+NPLS_faecal$varExpY
 ```
 
-## Infant faecal microbiome
+As expected, MLR analysis revealed that the model captured variation exclusively associated with maternal ppBMI.
 
 ```{r faecal metadata test whz}
 testMetadata(NPLS_faecal, 1, processedFaeces)
@@ -513,7 +507,28 @@ b
 c
 ```
 
+Positively loaded microbiota included many Actinobacteriota such as Actinomyces sp., Bifidobacterium bifidum, Bifidobacterium breve, and Bifidobacterium longum}, as well as Enterococcus sp., Straphylococcus aureus, and Lacticaseibacillus rhamnosus, which were enriched in high-growth infants and depleted in low-growth infants. Conversely, negatively loaded microbiota included many Proteobacteria such as Escherichia-Shigella coli, Klepsiella spp., and Haemophilus sp., as well as Erysipelatoclostridium spp., Parabacteroides sp., Bacteroides fragilis, and Clostridium sensu stricto sp., which were enriched in low-growth infants and depleted in high-growth infants. The time mode loadings indicated that these inter-subject differences were maximal at day 90.
+
 ## HM microbiome
+
+Subsequently, NPLS was applied to supervise the decomposition using the infant growth weight-for-height at six months (WHZ) as dependent variable (y). While the model selection procedure revealed that a two-component model corresponded to the RMSECV minimum, we found that the extra component did not help in the prediction of y, nor was it biologically interpretable. Hence, a one-component NPLS model was fitted, explaining 1.6% of the variation in X, and 9.7% of the variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r hm microbiome whz model selection}
+# CV_milk = NPLStoolbox::ncrossreg(processedMilk$data, Ynorm_milk)
+# a=CV_milk$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_milk$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b) # 1 or 2 comps
+```
+
+```{r hm microbiome whz load model}
+# NPLS_milk = NPLStoolbox::triPLS1(processedMilk$data, Ynorm_milk, 1)
+NPLS_milk = readRDS("./MAINHEALTH/20250702_NPLS_milk_whz.RDS")
+
+NPLS_milk$varExpX
+NPLS_milk$varExpY
+```
+
+However, MLR analysis revealed that the model captured variation associated with a mixture of infant WHZ and maternal ppBMI.
 
 ```{r hm microbiome metadata test whz}
 testMetadata(NPLS_milk, 1, processedMilk)
@@ -581,6 +596,25 @@ c
 ```
 
 ## HM metabolome
+
+Subsequently, NPLS was applied to supervise the decomposition using the infant growth weight-for-height at six months (WHZ) as dependent variable (y). The model selection procedure revealed that a one-component NPLS model corresponded to the RMSECV minimum, explaining 4.2% of the variation in X, and 15.8% of the variation in y. The commented code below performs the procedure, and is not rerun here due to computational limitations.
+
+```{r hm metabolome whz model selection}
+# CV_milkMetab = NPLStoolbox::ncrossreg(processedMilkMetab$data, Ynorm_milkMetab)
+# a=CV_milkMetab$varExp %>% pivot_longer(-numComponents) %>% ggplot(aes(x=as.factor(numComponents),y=value,col=as.factor(name),group=as.factor(name))) + geom_line() + geom_point() + xlab("Number of components") + ylab("Variance explained (%)") + theme(legend.position="none")
+# b=CV_milkMetab$RMSE %>% ggplot(aes(x=numComponents,y=RMSE)) + geom_line() + geom_point() + xlab("Number of components") + ylab("RMSECV")
+# ggarrange(a,b) # 1 comp
+```
+
+```{r hm metabolome whz load model}
+# NPLS_milkMetab = NPLStoolbox::triPLS1(processedMilkMetab$data, Ynorm_milkMetab, 2)
+NPLS_milkMetab = readRDS("./MAINHEALTH/20250702_NPLS_milkMetab_whz.RDS")
+
+NPLS_milkMetab$varExpX
+NPLS_milkMetab$varExpY
+```
+
+However, MLR analysis revealed that the model captured variation associated with a mixture of infant growth, but also maternal ppBMI and maternal secretor status.
 
 ```{r hm metabolome metadata test whz}
 testMetadata(NPLS_milkMetab, 1, processedMilkMetab)
