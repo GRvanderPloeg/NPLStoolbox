@@ -1,8 +1,10 @@
 # Changelog
 
-## NPLStoolbox (development version)
+## NPLStoolbox 1.1.1
 
-- Temp
+- Updated maintainer email.
+- Temporary removal of some articles pending re-release of
+  `CMTFtoolbox`.
 
 ## NPLStoolbox 1.1.0
 
