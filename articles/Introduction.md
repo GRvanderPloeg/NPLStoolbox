@@ -1,0 +1,37 @@
+# Introduction
+
+``` r
+
+library(NPLStoolbox)
+```
+
+``` r
+
+processedTongue = parafac4microbiome::processDataCube(Cornejo2025$Tongue_microbiome, sparsityThreshold=0.5, considerGroups=TRUE, groupVariable="GenderID", centerMode=1, scaleMode=2)
+
+processedSaliva = parafac4microbiome::processDataCube(Cornejo2025$Salivary_microbiome, sparsityThreshold=0.5, considerGroups=TRUE, groupVariable="GenderID", centerMode=1, scaleMode=2)
+
+processedCytokine = Cornejo2025$Salivary_cytokines
+```
+
+``` r
+
+modelTongue = parafac4microbiome::parafac(processedTongue$data, nfac=2, nstart=100)
+modelSaliva = parafac4microbiome::parafac(processedSaliva$data, nfac=2, nstart=100)
+modelCytokine = parafac4microbiome::parafac(processedCytokine$data, nfac=2, nstart=100)
+```
+
+``` r
+
+Y = as.numeric(as.factor(Cornejo2025$Tongue_microbiome$mode1$GenderID))
+Ycnt = Y - mean(Y)
+tongue_NPLS = triPLS1(processedTongue$data, Ycnt, 1)
+
+Y = as.numeric(as.factor(Cornejo2025$Salivary_microbiome$mode1$GenderID))
+Ycnt = Y - mean(Y)
+saliva_NPLS = triPLS1(processedSaliva$data, Ycnt, 1)
+
+Y = as.numeric(as.factor(Cornejo2025$Salivary_cytokines$mode1$GenderID))
+Ycnt = Y - mean(Y)
+cytokine_NPLS = triPLS1(processedCytokine$data, Ycnt, 1)
+```

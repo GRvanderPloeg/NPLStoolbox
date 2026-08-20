@@ -1,0 +1,33 @@
+# Authors and Citation
+
+## Authors
+
+- **Geert Roelof van der Ploeg**. Author, maintainer.
+  [](https://orcid.org/0009-0007-5204-3386)
+
+- **Johan Westerhuis**. Contributor.
+  [](https://orcid.org/0000-0002-6747-9779)
+
+- **Anna Heintz-Buschart**. Contributor.
+  [](https://orcid.org/0000-0002-9780-1933)
+
+- **Age Smilde**. Contributor. [](https://orcid.org/0000-0002-3052-4644)
+
+- **University of Amsterdam**. Copyright holder, funder.
+
+## Citation
+
+Source:
+[`DESCRIPTION`](https://github.com/GRvanderPloeg/NPLStoolbox/blob/master/DESCRIPTION)
+
+van der Ploeg G (2026). *NPLStoolbox: N-Way Partial Least Squares
+Modelling of Multi-Way Data*. R package version 1.1.0.9000,
+<https://github.com/GRvanderPloeg/NPLStoolbox>.
+
+    @Manual{,
+      title = {NPLStoolbox: N-Way Partial Least Squares Modelling of Multi-Way Data},
+      author = {Geert Roelof {van der Ploeg}},
+      year = {2026},
+      note = {R package version 1.1.0.9000},
+      url = {https://github.com/GRvanderPloeg/NPLStoolbox},
+    }
