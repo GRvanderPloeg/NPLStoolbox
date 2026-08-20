@@ -1,4 +1,4 @@
-# NPLStoolbox (development version)
+# NPLStoolbox 1.1.1
 
 * Temp
 
