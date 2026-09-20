@@ -2,6 +2,8 @@
 
 ## NPLStoolbox 1.1.1
 
+CRAN release: 2026-08-21
+
 - Updated maintainer email.
 - Temporary removal of some articles pending re-release of
   `CMTFtoolbox`.
