@@ -1,5 +1,7 @@
 # Changelog
 
+## NPLStoolbox (development version)
+
 ## NPLStoolbox 1.1.1
 
 CRAN release: 2026-08-21

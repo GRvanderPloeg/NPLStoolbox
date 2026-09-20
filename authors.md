@@ -18,16 +18,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/GRvanderPloeg/NPLStoolbox/blob/v1.1.1/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/GRvanderPloeg/NPLStoolbox/blob/master/DESCRIPTION)
 
 van der Ploeg G (2026). *NPLStoolbox: N-Way Partial Least Squares
-Modelling of Multi-Way Data*. R package version 1.1.1,
+Modelling of Multi-Way Data*. R package version 1.1.1.9000,
 <https://github.com/GRvanderPloeg/NPLStoolbox>.
 
     @Manual{,
       title = {NPLStoolbox: N-Way Partial Least Squares Modelling of Multi-Way Data},
       author = {Geert Roelof {van der Ploeg}},
       year = {2026},
-      note = {R package version 1.1.1},
+      note = {R package version 1.1.1.9000},
       url = {https://github.com/GRvanderPloeg/NPLStoolbox},
     }
